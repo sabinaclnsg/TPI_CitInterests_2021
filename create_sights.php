@@ -1,7 +1,7 @@
 <?php
 
-use SiteTemplate\models\SightsDAO;
-use SiteTemplate\models\UserDAO;
+use CitInterests\models\SightsDAO;
+use CitInterests\models\UserDAO;
 
 require_once 'controllers/filter_controller.php';
 require_once 'controllers/sights_controller.php';

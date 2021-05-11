@@ -2,8 +2,8 @@
 require_once './models/sightsDAO.php';
 require_once './models/userDAO.php';
 
-use SiteTemplate\models\SightsDAO;
-use SiteTemplate\models\UserDAO;
+use CitInterests\models\SightsDAO;
+use CitInterests\models\UserDAO;
 
 $user = UserDAO::GetUserData_ParamId($_GET['id']);
 ?>
