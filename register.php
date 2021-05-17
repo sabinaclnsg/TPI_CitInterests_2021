@@ -59,6 +59,11 @@ require_once './controllers/register_controller.php';
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <span id="passwordHelpInline" class="form-text">
+                                        Must be 8-20 characters long.
+                                    </span>
+                                </div>
                                 <div class="form-group row">
                                     <!-- Google Captcha -->
                                     <div class="g-recaptcha" data-sitekey="6Lc-Rs0aAAAAAMrPSbrIt2atdsc3w2pTSsho1Ukc"></div>
