@@ -1,30 +1,23 @@
 <?php
 require_once 'controllers/login_controller.php';
-require_once './forget_password.php';
-require_once 'controllers/forget_password_controller.php';
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Login - CitInterests</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <?php require_once 'controllers/head.php' // -- head -- 
+    ?>
     <!-- Google Captcha -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <!-- fade animation on load -->
-    <link rel="stylesheet" href="assets/css/load-animation.css">
 </head>
 
-<body style="background: url(&quot;assets/img/other/image-login.jpg&quot;);background-size: cover;">
+<body style="background: url(&quot;assets/img/other/image-login.jpg&quot;);background-size: cover;height: 1194px;">
+
     <?php
     require_once 'controllers/navbar_top.php';
     ?>
 
-    <div class="container" id="main-content">
+    <div class="container" id="main-content" style="height: 100%">
         <div class="row justify-content-center d-flex h-75 align-items-center">
             <div class="col-md-9 col-lg-12 col-xl-10">
                 <?php
@@ -63,6 +56,7 @@ require_once 'controllers/forget_password_controller.php';
             </div>
         </div>
     </div>
+    <?php include_once 'controllers/footer.php' ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>

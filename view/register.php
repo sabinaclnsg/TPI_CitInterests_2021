@@ -5,23 +5,17 @@ require_once './controllers/register_controller.php';
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Register - CitInterests</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <?php require_once 'controllers/head.php' // -- head -- 
+    ?>
     <!-- Google Captcha -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <!-- fade animation on load -->
-    <link rel="stylesheet" href="assets/css/load-animation.css">
 </head>
 
-<body>
+<body style="background: url(&quot;assets/img/other/image-register.jpg&quot;);background-size: cover;height: 1145px;">
     <?php require_once 'controllers/navbar_top.php' // -- navbar top --  
     ?>
 
-    <div class="container" id="main-content">
+    <div class="container" id="main-content" style="height: 100%">
         <?php
         // display message
         if (isset($_SESSION['error-message']) && isset($_GET['message'])) {
@@ -32,7 +26,7 @@ require_once './controllers/register_controller.php';
             <div class="card-body p-0">
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-flex">
-                        <div class="flex-grow-1 bg-register-image" style="background: url(&quot;assets/img/other/img-register.jpg&quot;);background-size: cover;"></div>
+                        <div class="flex-grow-1 bg-register-image" style="background: url(&quot;assets/img/other/image-register.jpg&quot;);background-size: cover;"></div>
                     </div>
                     <div class="col-lg-7">
                         <div class="p-5">
@@ -49,13 +43,13 @@ require_once './controllers/register_controller.php';
                                     <div class="col-sm-6 mb-3 mb-sm-0 input-group">
                                         <input class="form-control form-control-user" type="password" id="PasswordInput" placeholder="Mot de passe" name="password">
                                         <div class="input-group-append">
-                                            <a style="color: white; border-top-right-radius: 10rem; border-bottom-right-radius: 10rem; padding-top: 12px;" class="btn btn-info" id="button-addon2"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                            <a style="color: white; border-top-right-radius: 10rem; border-bottom-right-radius: 10rem; padding-top: 12px;" class="btn btn-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 input-group">
                                         <input class="form-control form-control-user" type="password" id="ConfirmPasswordInput" placeholder="Confirmer le mot de passe" name="confirm-password">
                                         <div class="input-group-append">
-                                            <a style="color: white; border-top-right-radius: 10rem; border-bottom-right-radius: 10rem; padding-top: 12px;" class="btn btn-info" id="button-addon2"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                            <a style="color: white; border-top-right-radius: 10rem; border-bottom-right-radius: 10rem; padding-top: 12px;" class="btn btn-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -74,6 +68,7 @@ require_once './controllers/register_controller.php';
             </div>
         </div>
     </div>
+    <?php include_once 'controllers/footer.php' ?>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>

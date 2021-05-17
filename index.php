@@ -97,39 +97,39 @@ if (isset($page)) {
 
     switch ($page) {
         case 'homepage':
-            require("homepage.php");
+            require("view/homepage.php");
             break;
         case 'login':
-            require("login.php");
+            require("view/login.php");
             break;
         case 'logout':
             break;
         case 'register':
-            require("register.php");
+            require("view/register.php");
             break;
         case 'forget-password':
-            require("forget_password.php");
+            require("view/forget_password.php");
             break;
         case 'create_sights':
-            require("create_sights.php");
+            require("view/create_sights.php");
             break;
         case 'user-settings':
-            require("user_settings.php");
+            require("view/user_settings.php");
             break;
         case 'admin':
-            require("admin.php");
+            require("view/admin.php");
             break;
         case 'admin_users':
-            require("admin_users.php");
+            require("view/admin_users.php");
             break;
         case 'admin_categories':
-            require("admin_categories.php");
+            require("view/admin_categories.php");
             break;
         case 'admin_sights':
-            require("admin_sights.php");
+            require("view/admin_sights.php");
             break;
         case 'sight_show':
-            require("sight_show.php");
+            require("view/sight_show.php");
             break;
     }
 } else {

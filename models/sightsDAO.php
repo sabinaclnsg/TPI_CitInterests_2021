@@ -290,7 +290,7 @@ class SightsDAO
     public static function FilterByCanton($canton)
     {
         $db = DBConnection::getConnection();
-        $sql = "SELECT id FROM sights WHERE canton = :canton";
+        $sql = "SELECT id FROM sights WHERE canton = :canton AND sight_showed = 1";
 
         $request = $db->prepare($sql);
         $request->execute([':canton' => $canton]);
@@ -300,7 +300,7 @@ class SightsDAO
     public static function FilterByCategory($id_category)
     {
         $db = DBConnection::getConnection();
-        $sql = "SELECT id_sights FROM sights_contains_category WHERE id_category = :id_category";
+        $sql = "SELECT a.id_sights FROM sights_contains_category as a INNER JOIN sights as b ON a.id_category = :id_category AND b.sight_showed = 1";
 
         $request = $db->prepare($sql);
         $request->execute([':id_category' => $id_category]);
@@ -310,7 +310,7 @@ class SightsDAO
     public static function GetCategoryIdByName($category_name)
     {
         $db = DBConnection::getConnection();
-        $sql = "SELECT id FROM category WHERE name = :category_name";
+        $sql = "SELECT a.id FROM category as a INNER JOIN sights as b ON a.name = :category_name AND b.sight_showed = 1";
 
         $request = $db->prepare($sql);
         $request->execute([':category_name' => $category_name]);
@@ -320,7 +320,7 @@ class SightsDAO
     public static function FilterByAge($id_age)
     {
         $db = DBConnection::getConnection();
-        $sql = "SELECT id_sights FROM sights_has_age_limit WHERE id_age_limit = :id_age";
+        $sql = "SELECT a.id_sights FROM sights_has_age_limit as a INNER JOIN sights as b ON a.id_age_limit = :id_age AND b.sight_showed = 1";
 
         $request = $db->prepare($sql);
         $request->execute([':id_age' => $id_age]);
@@ -332,11 +332,11 @@ class SightsDAO
         $db = DBConnection::getConnection();
 
         if ($budget == "+ de 15CHF/pers.") { // if budget is higher than 15
-            $sql = "SELECT id FROM sights WHERE price >= 15";
+            $sql = "SELECT id FROM sights WHERE price >= 15 AND sight_showed = 1";
         } else if ($budget == "- de 15CHF/pers.") { // if budget is lower than 15
-            $sql = "SELECT id FROM sights WHERE price <= 15";
+            $sql = "SELECT id FROM sights WHERE price <= 15 AND sight_showed = 1";
         } else if ($budget == "Gratuit") { // if price is free
-            $sql = "SELECT id FROM sights WHERE price = 0";
+            $sql = "SELECT id FROM sights WHERE price = 0 AND sight_showed = 1";
         } else {
             return false;
         }
@@ -369,7 +369,7 @@ class SightsDAO
     public static function GetAgeIdByName($age_name)
     {
         $db = DBConnection::getConnection();
-        $sql = "SELECT id FROM age_limit WHERE name = :age_name";
+        $sql = "SELECT a.id FROM age_limit as a INNER JOIN sights as b ON a.name = :age_name AND b.sight_showed = 1";
 
         $request = $db->prepare($sql);
         $request->execute([':age_name' => $age_name]);
@@ -522,6 +522,20 @@ class SightsDAO
             } else {
                 return false;
             }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    // Search Bar
+    public static function Search($input){
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "UPDATE sights SET sight_showed=1 WHERE name LIKE '%$input%'";
+
+            $request = $db->prepare($sql);
+            $request->execute();
+            return $request->fetchAll();
         } catch (\Throwable $th) {
             throw $th;
         }

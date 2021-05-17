@@ -1,12 +1,16 @@
 <?php
 
+use CitInterests\controllers\Sights;
 use CitInterests\models\SightsDAO;
 use CitInterests\models\UserDAO;
 
 require_once 'controllers/filter_controller.php';
 require_once 'controllers/sights_controller.php';
 
-
+if (isset($_POST['submit'])) {
+    $sight = new Sights();
+    $sight->CreateSight();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -172,11 +176,7 @@ require_once 'controllers/sights_controller.php';
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
-                </div>
-            </footer>
+            <?php include_once 'controllers/footer.php'?>
         </div>
     </div>
 

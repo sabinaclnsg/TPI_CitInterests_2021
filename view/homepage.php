@@ -1,19 +1,27 @@
 <?php
 require_once './models/sightsDAO.php';
+require_once './controllers/filter_controller.php';
 
+use CitInterests\controllers\Filter;
 use CitInterests\models\SightsDAO;
 
-$count_validated_sights = SightsDAO::CountValidatedSightsAmount()[0];
-$sights = SightsDAO::GetValidatedSights();
+$sights_dao = new SightsDAO();
 
-//var_dump(SightsDAO::GetCategoryIdByName('Place de pique-nique')[0]);
+$count_validated_sights = $sights_dao->CountValidatedSightsAmount()[0];
+$sights = $sights_dao->GetValidatedSights();
+
+$result = "";
+$sights_dao->ResetSightShow();
+
 ?>
 
 <!DOCTYPE html>
 <html>
 
+<head>
 <?php require_once 'controllers/head.php' // -- head -- 
 ?>
+</head>
 
 <body id="page-top">
     <div id="wrapper">
@@ -40,14 +48,16 @@ $sights = SightsDAO::GetValidatedSights();
                     ?>
                     <hr>
                 </section>
+                <div class="container-fluid">
+                    <form method="POST" class="form-inline d-none d-sm-inline-block ml-5 my-2 my-md-0 mw-100 navbar-search" style="width: 500px;">
+                        <div class="input-group"><input id="search" class="bg-light form-control border small" type="text" name="search" placeholder="Search for ..." <?= ($_GET['page'] != 'homepage' ? 'hidden' : '') ?>>
+                        </div>
+                    </form>
+                </div>
                 <div class="row row-cols-1 row-cols-md-4 g-4 m-0 m-md-5" id="output">
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
-                </div>
-            </footer>
+            <?php include_once 'controllers/footer.php'?>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="assets/js/jquery.min.js"></script>
@@ -68,9 +78,10 @@ $sights = SightsDAO::GetValidatedSights();
             GetData("categories[]");
             GetData("age_limits[]");
             GetData("budgets[]");
+            GetSearchData();
 
             $.ajax({
-                url: "controllers/get_data_ajax.php",
+                url: "controllers/get_filtered_sights.php",
                 method: "POST",
                 data: {
                     filter_data: 'empty'
@@ -79,6 +90,23 @@ $sights = SightsDAO::GetValidatedSights();
                     $('#output').html(data);
                 }
             });
+
+            function GetSearchData() {
+                $('#search').on('input', function() {
+                    var search_input = $('#search').val();
+
+                    $.ajax({
+                        url: "controllers/get_filtered_sights.php",
+                        method: "POST",
+                        data: {
+                            search_data: search_input
+                        },
+                        success: function(data) {
+                            $('#output').html(data);
+                        }
+                    });
+                });
+            }
 
             function GetData(inputName) {
 
@@ -91,7 +119,7 @@ $sights = SightsDAO::GetValidatedSights();
                         }
                     });
                     $.ajax({
-                        url: "controllers/get_data_ajax.php",
+                        url: "controllers/get_filtered_sights.php",
                         method: "POST",
                         data: {
                             filter_data: filter_list

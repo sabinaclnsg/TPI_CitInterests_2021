@@ -92,7 +92,7 @@ if (isset($_GET['id'])) {
                                     </table>
                                     <h3 class="card-title d-flex justify-content-center mt-4"><b>Tarif</b></h3>
                                     <hr>
-                                    <p class="card-text d-flex justify-content-center"><?= ($sight_info['price'] != 0 ? 'Adulte : ' . $sight_info['price'] : 'Gratuit') ?></p>
+                                    <p class="card-text d-flex justify-content-center"><?= ($sight_info['price'] != 0 ? 'Adulte : ' . $sight_info['price'] . 'CHF' : 'Gratuit') ?></p>
 
                                 </div>
                             </div>
@@ -154,27 +154,9 @@ if (isset($_GET['id'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="card mb-3" style="max-width: 540px;">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="assets/img/sights/" alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                 </section>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
-                </div>
-            </footer>
+    <?php include_once 'controllers/footer.php' ?>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script>

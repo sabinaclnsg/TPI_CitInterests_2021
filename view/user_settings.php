@@ -6,16 +6,8 @@ require_once 'controllers/user_settings_controller.php';
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Paramètres utilisateur - CitInterests</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <!-- fade animation on load -->
-    <link rel="stylesheet" href="assets/css/load-animation.css">
+<?php require_once 'controllers/head.php' // -- head -- 
+?>
 </head>
 
 <body id="page-top">
@@ -25,7 +17,7 @@ require_once 'controllers/user_settings_controller.php';
                 <?php require_once 'controllers/navbar_top.php' // -- navbar top -- 
                 ?>
                 <div class="container-fluid" id="main-content">
-                    <h3 class="text-dark mb-4">Profil</h3>
+                    <h3 class="text-dark mb-4"></h3>
                     <?php
                     if (isset($_SESSION['error-message']) && isset($_GET['message'])) {
                         echo $_SESSION['error-message'];
@@ -83,7 +75,7 @@ require_once 'controllers/user_settings_controller.php';
                                                         <div class="input-group mb-3" id="show_hide_password">
                                                             <input type="password" name="old_pwd" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2">
                                                             <div class="input-group-append">
-                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -94,7 +86,7 @@ require_once 'controllers/user_settings_controller.php';
                                                         <div class="input-group mb-3" id="show_hide_password">
                                                             <input type="password" name="new_pwd" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2">
                                                             <div class="input-group-append">
-                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -103,7 +95,7 @@ require_once 'controllers/user_settings_controller.php';
                                                         <div class="input-group mb-3" id="show_hide_password">
                                                             <input type="password" name="new_pwd_confirm" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2">
                                                             <div class="input-group-append">
-                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -118,11 +110,7 @@ require_once 'controllers/user_settings_controller.php';
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
-                </div>
-            </footer>
+    <?php include_once 'controllers/footer.php' ?>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
 

@@ -38,13 +38,6 @@ if ($_SESSION['connected'] == true) { // checks if user is connected
         <ul class="p-0 m-0">
             <a href="index.php?page=homepage" <?= (str_contains($_GET['page'], 'admin') === true ? "hidden" : "") ?>><img class="img-profile" style="width: 50px; height: 50px;" src="assets/img/other/LogoCitInterests.svg"></a>
         </ul>
-        <ul class="p-0 m-0">
-            <form class="form-inline d-none d-sm-inline-block ml-3 my-2 my-md-0 mw-100 navbar-search" style="width: 200px;">
-                <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..." <?= ($_GET['page'] != 'homepage' ? 'hidden' : '') ?>>
-                    <div class="input-group-append" <?= ($_GET['page'] != 'homepage' ? 'hidden' : '') ?>><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                </div>
-            </form>
-        </ul>
         <ul class="p-0 m-0 d-none d-lg-block" style="width: 100%;">
             <img class="img-profile" style="height: 40px;display: block;position: absolute;left: calc((100% - 165px) / 2);top:17px" src="assets/img/other/TexteCitInterests.png">
         </ul>
@@ -76,7 +69,6 @@ if ($_SESSION['connected'] == true) { // checks if user is connected
                     <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in">
                         <!-- DROPDOWN FOR WHEN USER IS CONNECTED -->
                         <div <?= (!$user_connected ? 'hidden' : '') ?>>
-                            <a class="dropdown-item" href="index.php?page=user"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profil</a>
                             <a class="dropdown-item" href="index.php?page=user-settings"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Paramètres</a>
                             <a class="dropdown-item" href="index.php?page=admin" <?= (!$user_admin ? "hidden" : "") ?>><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Admin</a>
 
