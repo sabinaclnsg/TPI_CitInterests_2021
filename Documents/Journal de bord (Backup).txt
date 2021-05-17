@@ -1,0 +1,332 @@
+# JOURNAL DE BORD | Sabina Calunsag
+
+## J1 - Lundi, 3 mai 2021
+#### 07h30 : *Lecture de l'énoncé + Rédaction du journal de bord*
+J'ai commencé ma journée en prenant connaissance de l'énoncé qui nous a été envoyé la veille. J'ai quelques petites questions que je devrai noter par rapport à l'énoncé mais malgré ca, je trouve que tout est clair.
+
+ Après avoir bien lu et analysé l'énoncé, jai directement crée un fichier **Markdown** sur **stackedit.io** pour mon Journal de Bord. Aujourd'hui, comme c'est le premier jour de mon TPI, je vais d'abord créer un ***dépôt git*** pour garder une sauvegarde de mes fichiers en ligne, ensuite je ferai un ***planning previsionnel*** et pour finir je vais rédiger le ***Product Backlog*** de mon projet.
+
+#### 08h10 : *Mise en place d'un dépôt Git*
+J'ai crée un répertoire pour mon projet sur **Github** puis j'ai mis en place un dossier que je peux accéder en local. Dans ce dossier je pourrai mettre tous les fichiers importants pour mon TPI. J'utilise **Git Bash** pour pouvoir envoyer et récupérer mes fichiers sur Github.
+>**Remarques :** J'ai utilisé une clé **SSH** pour le Github. 
+
+#### 09h10 : *Réalisation du planning*
+Pour le planning,  je vais m'inspirer d'un template de **Google Sheets**. J'ai décidé de mettre le prévisionnel et l'effectif ensemble avec des couleurs différentes pour pouvoir les distinguer. Je trouve qu'avec un affichage comme cela, les écarts de différences entre le prévue et l'effectif vont être beaucoup plus simple à comprendre visuellement. J'ai séparé les tâches de mon projet en demi-journées (4 heures par demi). Ensuite, j'ai écrit une formule qui calcul automatiquement le nombre total d'heures planifiées et le nombre total d'heures réalisées.
+>**Difficultés rencontrées:** Je trouve que le planning fait parti des tâches les plus dur du projet. La disposition du planning et l'ordre des tâches m'ont prit énormément de temps à faire. Je pense que le partie prévisionnel sera assez différent de l'effectif car j'ai sûrement trop sous estimée la durée de chaque tâche. 
+
+#### 11h40 : *Pause*
+
+#### 12h40 : *Rédaction du product backlog*
+Après avoir finalisé mon planning, j'ai commencé le Product Backlog qui m'a prit environ 2 heures a finaliser. J'ai mis de côté des fonctionnalités que j'ai trouvé assez important d'intégrer sur le site. Ces fonctionnalités ne sont pas inclus sur l'énoncé mais je demanderai ce que mon professeur pense. En attendant, je vais commencer à rédiger la documentation.
+
+#### 14h35 : *Début de la documentation*
+Pour faire la documentation, je me suis basée sur des documents que mon maître d'apprentissage m'a fournit. J'ai mis en place les titres de tous les aspects importants pour la réalisation du projet et il ne manque que de les remplir. Ensuite, j'ai rédigé ***l'introduction***, le résumé du cahier des charges et la méthodologie.
+
+>**Difficultés rencontrées :** Vers la fin de l'après-midi, j'ai eu un peu plus de mal à suivre mon planning. Étant trop concentrée sur la rédaction de la documentation, je me suis pas rendu compte du temps qu'il me restait pour finaliser mon journal de bord.
+
+#### 16h45 : *FIN*
+
+
+## J2 - Mardi, 4 mai 2021
+#### 07h30 : *Rédaction du journal de bord*
+Je vais commencer par rédiger le bilan d'hier car à cause de ma mauvaise gestion du temps je n'ai pas eu le temps de le faire.
+
+**Bilan 03.05.2021 :** Malgré le fait que j'ai eu un peu de mal à suivre mon planning, la journée s'est plutôt bien passé. J'ai réalisé tout ce que j'avais à faire même si je pense que j'aurai pu avancer un peu plus sur la documentation. Au lieu d'écrire, j'ai passé trop de temps à faire un schéma pour la partie méthodologie. Pour les prochains jours, j'essayerai de faire plus attention et de ne pas perdre trop de temps sur des détails.
+
+Aujourd'hui, je vais principalement travailler sur les ***maquettes*** et la ***base de données***. Pour la création des maquettes, je vais utiliser **Balsamiq** et la création du modèle conceptuel de données se fera avec **Draw.io**. Plus tard dans la journée ***j'implémenterai la base de données*** et je finirai par ***choisir un logo ainsi que les couleurs thème*** du site. J'ai aussi planifié d'avancer la documentation en espérant qu'il me restera un peu de temps.
+
+#### 08h00 : *Création des maquettes*
+Pour la première tâche de la journée, j'ai planifié de faire les ***maquettes des pages principales***. Pour les maquettes, j'ai décidé d'utiliser Balsamiq. Lorsque j'ai lancé l'application, je me suis rendu compte que ma licence de 30 jours était malheureusement fini. J'ai donc cherché sur internet s'il y avait une version web et heureusement j'ai trouvé l'application web de Balsamiq et j'ai pu commencer le maquettage.
+
+#### 08h20 : *Madame mota est venue me donner des conseils*
+Madame Mota est passé me voir dans ma salle pour répondre à quelques questions que j'avais par rapport au TPI. Elle m'a surtout fait remarqué que j'ai sous évalué les plans de tests et que c'est une partie assez important pour la documentation et que ça va surtout m'aider pour le développement plus tard. 
+
+#### 08h50 : *Retour au création des maquettes*
+La création des maquettes nécessite plus de réflexion que ce que je pensais. J'ai réfléchi a plusieurs possibilités de mise en place pour faire en sorte que l'expérience utilisateur soit agréable et ergonomique.
+
+**Page d'accueil :**
+Dans la partie filtrage des centres d'intérêts, j'ai beaucoup hésité entre utiliser des radio boutons accompagné d'une liste ou d'utiliser des checkbox. Je me suis ensuite rendu compte que plusieurs filtres peuvent être actifs en même temps donc j'ai décidé d'utiliser des checkbox pour avoir un visuel plus ergonomique. Pour ca, je me suis inspirée du site web loisirs.ch.
+
+Pour la partie affichage, je me suis inspirée de Google Travel : Things to do. Je trouve que l'affichage est simple et facile a comprendre. J'ai également bien aimé comment les horaires sont affichés. Toutes les informations sont présentes et compréhensible.
+
+#### 10h00 : *Création du modèle conceptuel de données*
+Pour créer le modèle conceptuel de données, j'ai utilisé draw.io. Il y a toujours des parties dans l'énoncé qui sont pas tout a fait clair mais je pense que je peux déjà appliquer tout ceux dont je pense avoir bien compris. 
+
+#### 11h40 : *Pause*
+
+#### 13h00 : *Réunion avec mon maître d'apprentissage*
+Je suis allée voir M. Dido Malambu, mon maître d'apprentissage pour lui poser des questions sur l'énoncé. Il m'a clarifié beaucoup de points qui n'étaient pas forcément précisé dans l'énoncé. Avec cela j'ai pu avoir une vision plus clair du projet mais surtout de comment mieux gérer la base de données.
+#### 13h40 : *Retour au création du modèle conceptuel de données*
+Après la réunion avec mon professeur, j'ai réalisé qu'il manque beaucoup de tables et de colonnes dans la base de donnée. Je vais rajouter toutes les parties manquant avec l'aide des notes que j'ai pris pendant le rendez-vous.
+#### 14h40 : *Implémentation de la base de données*
+L'implémentation était assez simple à faire grâce au MCD. Après avoir fini le travail, je me suis rendu compte qu'il manquait a parie "tranche d'âge" dans la table "Centre_dInteret". Cette colonne est essentiel pour le filtrage des activités par âge. J'ai hésité entre faire un simple enum "âge" dans la table "Centre_dInteret" mais en réfléchissant, j'ai réalisé que comme la catégorie, un centre d'intérêt peut être disponible a plusieurs tranches d'âge. Pour finir, j'ai donc créer une nouvelle table "Tranche_Age".
+#### 15h40 : *Recherche logo + charte graphique*
+Après avoir fini la tâche d'implémentation de la base de données, j'ai commencé la recherche de logo et de couleurs thème. Dans la réalisation de cette tâche, j'ai pris beaucoup de temps à faire des recherches web pour essayer de trouver un logo qui convient. Si jamais je ne trouve pas de logo (gratuit) qui va bien avec le projet, je pourrai m'inspirer des logos pour en créer un moi même. 'ai inar rasser pusieurs emaques  
+ h  
+ ilan ui, était une journée assez épuisante car je trouve que c'est assez fatiguant de faire beaucoup de gestion de base de données en une journée. J'ai souvent du changé des tables quand une idée me venait dans la tête mais maintenant que tout est en place je pense que ca devrait aller.
+Je suis assez contente car, j'ai pu réfléchir sur des points de l'énoncédiscuté avec M. Dido Malambu sur des points de l'énoncé que j'avais pas forcément compris. 
+J'ai fait un petit changement sur e plan effectif, j'ai ajouté la ligne rae test. J'avais pas très bien compris à quoi servait les tests et je ne savais pas du tout quand il fallait les faire. Avec les conseils de Mme. Mota j'ai réalisé que c'était plus correcte de faire les tests tous les jours.
+J'espère que demain sera un peu plus tranquille qu'aujourd'hui
+
+
+## J3 - Mercredi, 5 mai 2021
+#### 07h30 : *Rédaction du journal de bord*
+Aujourd'hui, je vais enfin faire un peu de développement. J'ai planifié de commencer la journée avec la tâche de ***choisir le logo et les couleurs thème*** du projet. Ensuite je vais commencer à faire le ***template des pages principales*** avec l'aide du logiciel **Bootstrap Studio**. Sur mon planning, j'ai indiqué que cette tâche prendra au moins 4 heures à faire mais en réfléchissant, je pense que j'ai trop sur estimé la difficulté de la tâche. Pour la dernière tâche de la journée, je ferai un peu de ***développement***. J'ai planifié de faire la ***connexion à la base de données*** et de déjà coder les fonctions en lien avec la base de données (***CRUD***). Cela me faciliterai les tâches de demain où je devrai commencer à faire les pages principales.
+
+#### 08h00 : *Création le logo et les couleurs thème*
+**Charte graphique :**
+J'ai mis ensemble les couleurs principales que je pense être en raccord avec le thème du projet.
+- ***(HEX) #293250 - Bleu*** : Fait penser à la liberté, la mer
+- ***(HEX) #FFD55A - Jaune*** : Fait penser au soleil, joie
+- ***(HEX) #6DD47E - Vert*** : Fait penser à la nature, au fraîcheur
+Avec ces couleurs et l'inspiration des logos que j'ai trouvé sur internet, j'ai pu créer un logo assez simple mais cohérent. Pour cela, j'ai utilisé un logiciel qui s'appelle **Figma**.
+>**Remarques :** Je me suis rendu compte que le logo fait un peu penser a celui de Google.
+
+#### 10h05 : *Création des templates des pages*
+Pour créer les templates, je vais utiliser un logiciel qui s'appelle **Bootstrap Studio** et je vais principalement me baser d'une structure qui est intégré dans le logiciel. 
+Avec l'aide des maquettes, c'était beaucoup plus simple de créer les templates. J'avais prévu 4 heures pour les produire mais j'ai seulement passé environ 50 minutes pour tous les faire.
+
+#### 11h00 : *Rédaction des plans de tests*
+J'ai fini mes tâches un peu plus tôt que prévue donc je pense que c'est le bon moment de faire les plans de tests dont nous avons parlé la veille avec Mme. Mota.
+
+#### 11h40 : *Pause*
+#### 12h40 : *Retour aux rédactions des plans de tests*
+Il me reste encore quelques tests à faire  mais je ne pense pas que ca va prendre plus que 30 minutes  faire. Pour cet après-midi j'avais prévu faire encore 2 heures de **Bootstrap Studio** mais comme j'ai pu finir la tâche assez tôt, j'avancerai sur d'autres parties de mon planning.
+
+#### 13h10 : *création des méthodes CRUD*
+J'ai pu finir les plans de tests sans trop dépasser les 30 minutes comme prévue. Je vais maintenant commencer le développement. Tout d'abord, je vais mettre en place la connexion à la base de données en PDO et vérifier si cela marche. Ensuite je ferai une classe utilisateur et une classe centre d'intérêts pour pouvoir intégrer les méthodes CRUD. 
+
+#### 13h40 : *Page inscription et connexion*
+Je suis toujours en avance par rapport à mon planning, alors j'ai décidé d'avancer sur la page d'inscription et de connexion qui sont prévues pour demain.
+
+#### 15h10 : *Documentation + rapport de test*
+J'ai réussi à finir la page inscription et la page connexion donc je vais déjà faire la structure du rapport de test pour que je puisse l'utiliser demain et puis j'avancerai sur la documentation. Avec les couleurs et le logo que j'ai terminé de faire aujourd'hui, je pensais les intégrer sur la documentation. 
+
+#### 16h10 : *Rédaction du journal de bord*
+Pour finir ma journée, je vais rédiger le journal de bord et faire le bilan de la journée
+
+**Bilan :**
+C'était une journée assez productive aujourd'hui. Je suis contente de pouvoir avancer plus loin dans le planning. Cela me donnera plus de temps à travailler sur les tâches qui vont être un peu plus dur. A la fin de la journée, je suis souvent moins motivée, surtout avec tous les documentations à faire mais malgré ca, la journée s'est très bien passé.
+
+#### 16h45 : *FIN*
+
+
+## J4 - Jeudi, 6 mai 2021
+#### 07h30 : *Titre (Activité)Rédaction du journal de bord*
+Descriptione
+>**Remarques :** 
+#### 08h10 : *Titre (Activité)rtié*
+Descriptiones 
+#### 09h10 : **
+Descriptionemaru
+>*mes  
+#### 1h40 : *Pause*
+#### 12h0 : *itre ctiescriptionques  
+#### 13h0 : *tre ivité*
+escription
+>*mes *Remarques :**mes  
+#### 14h40 : *Titre (Actiiévité)*
+Diéescription
+>*emarues  
+#### 1h40 : *itre ctiviDéescription 
+#### 16h0 : *tre ivité*
+escripionemarques  
+#### 16h45 : *FIN*
+
+
+## J5 - Lundi, 10 mai 2021
+#### 07h30 : **
+Description
+>**Remarques :** 
+#### 08h10 : *Titre (Activité)*
+Descriptionques  
+#### 09h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 11h40 : *Pause*
+#### 12h40 : *itre ctiescription
+>**Remarques :** 
+#### 13h30 : *Titre (Activité)*
+Description
+>* 
+#### 1h40 : *itre ctiescription
+>**Remarques :** 
+#### 15h0 : *itre ctiviescription
+>**Remarques :** 
+#### 16h20 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h45 : *FIN*
+
+
+## J6 - Mardi, 11 mai 2021
+#### 07h30 : *Titre (Activité)*
+Descriptionues  
+#### 08h10 : *Titre (Activité)*
+Description
+>**Remarqerues :** 
+#### 09h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 11h40 : *Pause*
+#### 12h40 : *Titre (Activité)*
+Diéescription
+>**Remarques :** 
+#### 13h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 14h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 15h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h20 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h45 : *FIN*
+
+
+## J7 - Mercredi, 12 mai 2021
+#### 07h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 08h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 09h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 11h40 : *Pause*
+#### 12h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 13h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 14h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 15h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h20 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h45 : *FIN*
+
+
+## J8 - Lundi, 17 mai 2021
+#### 07h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 08h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 09h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 11h40 : *Pause*
+#### 12h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 13h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 14h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 15h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h20 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h45 : *FIN*
+
+
+## J9 - Mardi, 18 mai 2021
+#### 07h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 08h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 09h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 11h40 : *Pause*
+#### 12h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 13h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 14h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 15h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h20 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h45 : *FIN*
+
+
+## J10 - Mercredi, 19 mai 2021
+#### 07h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 08h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 09h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 11h40 : *Pause*
+#### 12h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 13h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 14h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 15h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h20 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h45 : *FIN*
+
+
+## J11 - Jeudi, 20 mai 2021
+#### 07h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 08h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 09h10 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 11h40 : *Pause*
+#### 12h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 13h30 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 14h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 15h40 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h20 : *Titre (Activité)*
+Description
+>**Remarques :** 
+#### 16h45 : *FIN*

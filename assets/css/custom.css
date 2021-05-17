@@ -1,0 +1,119 @@
+@font-face {
+    font-family: "Espera";
+    src: url(../fonts/espera/Espera-Regular.ttf);
+}
+
+
+
+html, body {
+    font-family: "Espera", sans-serif; /*Specify your font name here*/
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    color: #313131;
+}
+
+.card-img-top{
+    width:100%;height: 300px; 
+    object-fit:cover
+}
+
+
+.crop-text-3 {
+    -webkit-line-clamp: 3;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+
+.admin-card{
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in;
+	transition: .5s ease-in;
+}
+
+.admin-card-body{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, #333, #333 25%, rgba(0,0,0,0) 75%);;
+    opacity: 0.3;
+}
+
+.admin-card:hover{
+	-webkit-transform: scale(1.1);
+	transform: scale(1.05);
+
+}
+/** Button Tags **/
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show>.btn-secondary.dropdown-toggle {
+    color: #fff;
+    background-color: #293250;
+    border-color: #293250
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.show>.btn-secondary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 .2rem rgba(151, 153, 166, .5)
+}
+
+.btn-secondary.focus,
+.btn-secondary:focus,
+.btn-secondary:hover {
+    color: #fff;
+    background-color: none;
+    border-color: none;
+}
+
+.btn-secondary.focus,
+.btn-secondary:focus {
+    box-shadow: none;
+}
+
+
+/** Yellow button **/
+
+.btn-yellow {
+    color: #293250;
+    background-color: #FFD55A;
+    border-color: #FFD55A
+}
+
+.btn-yellow.focus,
+.btn-yellow:focus,
+.btn-yellow:hover {
+    color: #293250;
+    background-color: #ebc451;
+    border-color: #ebc551cc
+}
+
+.btn-yellow.focus,
+.btn-yellow:focus {
+    box-shadow: 0 0 0 .2rem rgba(105, 136, 228, .5)
+}
+
+.btn-yellow.disabled,
+.btn-yellow:disabled {
+    color: #293250;
+    background-color: #ffe083;
+    border-color: #ffe083
+}
+
+.btn-yellow:not(:disabled):not(.disabled).active,
+.btn-yellow:not(:disabled):not(.disabled):active,
+.show>.btn-yellow.dropdown-toggle {
+    color: #293250;
+    background-color: #ebc451;
+    border-color: #ebc451
+}
+
+.btn-yellow:not(:disabled):not(.disabled).active:focus,
+.btn-yellow:not(:disabled):not(.disabled):active:focus,
+.show>.btn-yellow.dropdown-toggle:focus {
+    box-shadow: 0 0 0 .2rem rgba(105, 136, 228, .5)
+}
