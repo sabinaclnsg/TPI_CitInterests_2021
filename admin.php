@@ -35,17 +35,17 @@ if (!UserDAO::IsAdmin($_SESSION['connected_user_id'])) {
 
                     <div class="row row-cols-1 row-cols-md-2 g-4 mx-5 d-flex h-75">
                         <div class="col d-flex align-items-center">
-                            <a href="index.php?page=admin_users" style="text-decoration: none; color: black;">
+                            <a href="index.php?page=admin_users">
                                 <div class="card text-center admin-card" style="background: url(&quot;assets/img/other/admin-users-image.jpg&quot;);background-size: cover; height:400px; color:white">
                                     <div class="card-body p-0">
                                         <div class="admin-card-body"></div>
-                                        <h2 class="card-title" style="z-index=1">Gestion des utilisateurs</h2>
+                                        <h2 class="card-title">Gestion des utilisateurs</h2>
                                     </div>
                                 </div>
                             </a>
                         </div>
                         <div class="col d-flex align-items-center">
-                            <a href="index.php?page=admin_sights" style="text-decoration: none; color: #5a5c69;">
+                            <a href="index.php?page=admin_sights">
                                 <div class="card text-center">
                                     <div class="card-body" style="background: url(&quot;assets/img/other/admin-sights-image.jpg&quot;);background-size: cover; height:400px">
                                         <h2 class="card-title">Gestion des centres d'intérêt</h2>

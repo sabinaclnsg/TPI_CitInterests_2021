@@ -5,10 +5,12 @@ require_once './models/userDAO.php';
 use CitInterests\models\UserDAO;
 
 if ($_SESSION['connected'] == true) { // checks if user is connected
+    $user_dao = new UserDAO();
+
     $user_connected = true; // hide profile display on the top right of the page
 
-    $user_data = UserDAO::GetUserData_ParamId($_SESSION['connected_user_id']);
-    $user_admin = UserDAO::IsAdmin($_SESSION['connected_user_id']);
+    $user_data = $user_dao->GetUserData_ParamId($_SESSION['connected_user_id']);
+    $user_admin = $user_dao->IsAdmin($_SESSION['connected_user_id']);
     $firstname = $user_data[0]['firstname'];
     $lastname = $user_data[0]['lastname'];
     $profile_icon = $user_data[0]['image'];
@@ -33,16 +35,23 @@ if ($_SESSION['connected'] == true) { // checks if user is connected
 
 <nav class="navbar navbar-light navbar-expand bg-white shadow topbar static-top">
     <div class="container-fluid">
-        <a href="index.php?page=homepage" <?= (str_contains($_GET['page'], 'admin') === true ? "hidden" : "") ?>><img class="img-profile" style="width: 50px; height: 50px;" src="assets/img/other/LogoCitInterests.svg"></a>
-        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..." <?= ($_GET['page'] != 'homepage' ? 'hidden' : '') ?>>
-                <div class="input-group-append" <?= ($_GET['page'] != 'homepage' ? 'hidden' : '') ?>><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-            </div>
-        </form>
-
-        <ul class="nav navbar-nav navbar-center text-center d-none d-lg-block" style="margin-right: 1%;">
-        <li><img class="img-profile" style="height: 30px;" src="assets/img/other/TexteCitInterests.png"></li>
+        <ul class="p-0 m-0">
+            <a href="index.php?page=homepage" <?= (str_contains($_GET['page'], 'admin') === true ? "hidden" : "") ?>><img class="img-profile" style="width: 50px; height: 50px;" src="assets/img/other/LogoCitInterests.svg"></a>
         </ul>
+        <ul class="p-0 m-0">
+            <form class="form-inline d-none d-sm-inline-block ml-3 my-2 my-md-0 mw-100 navbar-search" style="width: 200px;">
+                <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..." <?= ($_GET['page'] != 'homepage' ? 'hidden' : '') ?>>
+                    <div class="input-group-append" <?= ($_GET['page'] != 'homepage' ? 'hidden' : '') ?>><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                </div>
+            </form>
+        </ul>
+        <ul class="p-0 m-0 d-none d-lg-block" style="width: 100%;">
+            <img class="img-profile" style="height: 40px;display: block;position: absolute;left: calc((100% - 165px) / 2);top:17px" src="assets/img/other/TexteCitInterests.png">
+        </ul>
+
+
+
+
         <!-- DISPLAY PROFILE TOP RIGHT -->
         <ul class="navbar-nav flex-nowrap ml-auto">
             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
@@ -61,7 +70,7 @@ if ($_SESSION['connected'] == true) { // checks if user is connected
                 <div class="nav-item dropdown no-arrow">
                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-toggle="dropdown" href="#">
                         <span class="d-none d-lg-inline mr-2 text-gray-600 small"><?= $firstname . " " . $lastname ?></span>
-                        <img class="border rounded-circle img-profile" src="assets/img/profile_icon/<?=$profile_icon?>">
+                        <img class="border rounded-circle img-profile" src="assets/img/profile_icon/<?= $profile_icon ?>">
                     </a>
 
                     <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in">

@@ -49,7 +49,7 @@ if (isset($_POST['filter_data']) && $_POST['filter_data'] != 'empty') {
         } else {
             $status = '<span class="text-danger">Closed</span>';
         }
-        $result .= "<div class=\"col my-3\">
+        $result .= "<div class=\"col-sm-12 col-md-6 col-lg-4 col-xl-3 my-3\">
     <a href=\"index.php?page=sight_show&id=". $sight_show['id'] ."\" style=\"color:black; text-decoration:none\"><div class=\"card h-100\">
         <img src=\"" . $img_file_path . $sight_show['image'] . "\" class=\"card-img-top\" alt=\"" . $sight_show['image'] . "\" style=\"\">
         <div class=\"card-body\" style=\"height:180px\">
@@ -92,34 +92,46 @@ if (isset($_POST['filter_data']) && $_POST['filter_data'] != 'empty') {
         } else {
             $status = '<span class="text-danger">Closed</span>';
         }
-        $result .= "<div class=\"col my-3\">
-    <a href=\"index.php?page=sight_show&id=". $sight_show['id'] ."\" style=\"color:black; text-decoration:none\"><div class=\"card h-100\">
-        <img src=\"" . $img_file_path . $sight_show['image'] . "\" class=\"card-img-top\" alt=\"" . $sight_show['image'] . "\" style=\"\">
-        <div class=\"card-body\" style=\"height:180px\">
-            <h4 class=\"card-title\">
-                <b>" . $sight_show['name'] . " | <h6 class=\"d-inline\"><i class=\"fas fa-clock\"></i>&nbsp; $status</h6></b>
-            </h4>
-            <hr>
-            <p class=\"card-text text-overflow crop-text-3\">" . $sight_show['description'] . "</p>
+        $result .= "<div class=\"col-sm-12 col-md-6 col-lg-4 col-xl-3 my-3\">
+    <a href=\"index.php?page=sight_show&id=". $sight_show['id'] ."\" style=\"color:black; text-decoration:none\">
+        <div class=\"card h-100\">
+        <div class=\"row sight-card\">
+            <div class=\"col-5 col-md-12 sight-image-body\">
+                <img src=\"" . $img_file_path . $sight_show['image'] . "\" class=\"card-img-top sight-image\" alt=\"" . $sight_show['image'] . "\" style=\"\">
+            </div>
+            <div class=\"col-7 col-md-12 sight-body-1\">
+                <div class=\"card-body p-0 p-md-3 sight-body-2\" style=\"height:180px\">
+                    <h4 class=\"card-title\">
+                        <b>" . $sight_show['name'] . "<h6 class=\"d-inline sight-status-1\"> | <i class=\"fas fa-clock\"></i>&nbsp; $status</h6></b>
+                    </h4>
+                    <hr>
+                    <p class=\"card-text text-overflow crop-text-3\">" . $sight_show['description'] . "</p>
+                </div>
+                <div class=\"card-footer p-0 p-md-3 sight-footer\" >
+                    <div class=\"row\">
+                        <div class=\"col-6 mb-2 d-flex align-items-center\">" .
+                            ($sight_show['price'] == 0 ? '<span style="color:green">Gratuit</span>' : '<span class=\"text-primary\">' . $sight_show['price'] . ' CHF</span>')
+                    .  "</div>
+                    <div class\"col-6 sight-status-2\" style=\"width:50%\"><h6 class=\"float-right d-md-none pr-4 m-0 pt-1\">$status</h6></div>
+                    </div>
+                    <div class=\"d-none d-md-block\">";
+                    foreach ($sights_dao->GetSightAge($sight_show['id']) as $a) {
+                        $result .= "<label class=\"btn btn-secondary px-1\" style=\"height:28px; font-size:15px; padding:2px; margin-left: 3px;margin-right: 3px;\">".
+                            $a['name']
+                            ."</label>";
+                    }
+                    foreach ($sights_dao->GetSightCategory($sight_show['id']) as $c) {
+                        $result .= "<label class=\"btn btn-secondary px-1\" style=\"height:28px; font-size:15px; padding:2px; margin-left: 3px;margin-right: 3px;\">".
+                            $c['name']
+                            ."</label>";
+                    }
+                    $result .= "
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class=\"card-footer\" >
-            <div class=\"row\">
-                <div class=\"col-6 mb-2 d-flex align-items-center\">" .
-            ($sight_show['price'] == 0 ? '<span style="color:green">Gratuit</span>' : '<span class=\"text-primary\">' . $sight_show['price'] . ' CHF</span>')
-            . "</div>
-            </div><div class=\"\">";
-        foreach ($sights_dao->GetSightAge($sight_show['id']) as $a) {
-            $result .= "<label class=\"btn btn-secondary px-1\" style=\"height:28px; font-size:15px; padding:2px; margin-left: 3px;margin-right: 3px;\">".
-                $a['name']
-                ."</label>";
-        }
-        foreach ($sights_dao->GetSightCategory($sight_show['id']) as $c) {
-            $result .= "<label class=\"btn btn-secondary px-1\" style=\"height:28px; font-size:15px; padding:2px; margin-left: 3px;margin-right: 3px;\">".
-                $c['name']
-                ."</label>";
-        }
-        $result .= "</div></div>
-        </div></a>
+        </div>
+    </a>
 </div>";
     }
 

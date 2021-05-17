@@ -71,7 +71,7 @@ require_once 'controllers/admin_users_controller.php';
                                                         <td>
                                                             <?php
                                                             if ($column == 'image') { ?>
-                                                                <img class="rounded-circle mr-2" width="30" height="30" src="assets/img/profile_icon/<?= $user[$column] ?>">
+                                                                <img class="rounded-circle mr-2" width="30" height="30" src="assets/img/profile_icon/<?= $user[$column] ?>" style="object-fit: cover">
                                                             <?php
                                                             } else if ($column == 'admin') {
                                                                 if ($user[$column] == '1') {

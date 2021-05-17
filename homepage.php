@@ -40,7 +40,7 @@ $sights = SightsDAO::GetValidatedSights();
                     ?>
                     <hr>
                 </section>
-                <div class="row row-cols-1 row-cols-md-4 g-4 m-5" id="output">
+                <div class="row row-cols-1 row-cols-md-4 g-4 m-0 m-md-5" id="output">
                 </div>
             </div>
             <footer class="bg-white sticky-footer">

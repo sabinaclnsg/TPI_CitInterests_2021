@@ -1,5 +1,5 @@
 <?php
-require_once 'controllers/admin_sights_controller.php';
+require_once 'controllers/admin_categories_controller.php';
 ?>
 
 <!DOCTYPE html>
@@ -57,8 +57,6 @@ require_once 'controllers/admin_sights_controller.php';
                                             }
                                             ?>
                                             <th></th>
-                                            <th></th>
-                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -108,103 +106,42 @@ require_once 'controllers/admin_sights_controller.php';
 
                                                     <td id="unclickable" class="">
                                                         <input type="text" name="id_sight" value="<?= $sight['id'] ?>" hidden>
-                                                    <td>
                                                         <!-- Edit sight -->
                                                         <button type="submit" class="btn" name="submit_modify_sight" style="box-shadow: none;"><i class="fas fa-check" style="color: green;"></i></button>
                                                     </td>
-                                                    <td>
-                                                        <!-- Delete sight -->
-                                                        <a id="<?= $sight['id'] ?>" style="box-shadow: none;" data-toggle="modal" data-target="#confirm_delete_sight" class="open-modal mr-3"><i class="fas fa-minus" style="color: red;"></i></a>
-                                                    </td>
-                                                    </td>
                                                 </tr>
                                                 <tr class="table-warning">
-                                                    <td style="width: 5%">
-                                                        <!-- ID -->
+                                                    <td style="width: 5%" colspan="6">
+                                                        <!-- Age -->
                                                         <div class="toggle_sight<?= $sight['id'] ?>" style="display:none;">
-                                                            #
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 10%">
-                                                        <!-- Name -->
-                                                        <div class="toggle_sight<?= $sight['id'] ?>" style="display:none;">
-                                                            <input type="text" class="form-control" placeholder="First name" aria-label="Name" value="<?= $sight['name'] ?>" name="name_<?= $sight['id'] ?>">
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 5%">
-                                                        <!-- Canton -->
-                                                        <div class="toggle_sight<?= $sight['id'] ?>" style="display:none; width: 30px; margin:0">
-                                                            <select class="form-select" aria-label="Canton" name="canton_<?= $sight['id'] ?>">
-                                                                <option selected>Cantons :</option>
+                                                            <div class="btn-group-toggle col-lg-10 col-md-12" data-toggle="buttons">
                                                                 <?php
-                                                                foreach ($cantons as $canton) {
-                                                                    if ($canton == $sight['canton']) {
-                                                                        echo "<option value=\"$canton\" selected>$canton</option>";
-                                                                    } else {
-                                                                        echo "<option value=\"$canton\">$canton</option>";
-                                                                    }
+                                                                for ($i = 0; $i < $age_limits_count; $i++) {
+                                                                ?>
+                                                                        <label class="btn btn-secondary active px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
+                                                                            <input type="checkbox" autocomplete="off" name="age_limit[]" value="<?= $age_limits[$i]['name'] ?>"> <?= $age_limits[$i]['name'] ?>
+                                                                        </label>
+                                                                <?php
+                                                                    
                                                                 }
                                                                 ?>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 15%">
-                                                        <!-- Adress -->
-                                                        <div class="toggle_sight<?= $sight['id'] ?>" style="display:none;">
-                                                            <input type="text" class="form-control" placeholder="Adress" aria-label="Adress" value="<?= $sight['adress'] ?>" name="adress_<?= $sight['id'] ?>">
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 10%">
-                                                        <!-- Description -->
-                                                        <div class="toggle_sight<?= $sight['id'] ?>" style="display:none; width: 300px; margin:0">
-                                                            <textarea class="form-control" placeholder="Description" aria-label="Description" name="description_<?= $sight['id'] ?>"><?= $sight['description'] ?></textarea>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 5%">
-                                                        <!-- Price -->
-                                                        <div class="toggle_sight<?= $sight['id'] ?>" style="display:none; width: 20px; margin:0">
-                                                            <input style="width: 50px;" type="number" class="form-control" placeholder="Price" aria-label="Price" value="<?= $sight['price'] ?>" name="price_<?= $sight['id'] ?>">
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 10%">
-                                                        <!-- Image -->
-                                                        <div class="form-check toggle_sight<?= $sight['id'] ?>" style="display:none;">
-                                                            <div class="image-upload">
-                                                                <label for="file-input<?= $sight['id'] ?>">
-                                                                    <i class="fas fa-images" style="cursor:pointer;color:blue"></i>
-                                                                </label>
-                                                                <input id="file-input<?= $sight['id'] ?>" type="file" name="image_<?= $sight['id'] ?>" accept="image/*" hidden />
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td style="width: 5%">
-                                                        <!-- Validated -->
-                                                        <div class="form-check toggle_sight<?= $sight['id'] ?>" style="display:none;">
-                                                            <input class="form-check-input" type="checkbox" value="1" id="cbValidated<?= $sight['id'] ?>" name="is_validated_<?= $sight['id'] ?>" <?= ($sight['validated'] == '1' ? 'checked' : '') ?>>
+                                                    <td style="width: 10%" colspan="6">
+                                                        <!-- Categories -->
+                                                        <div class="toggle_sight<?= $sight['id'] ?>" style="display:none;">
+                                                            <div class="btn-group-toggle col-lg-10 col-md-12" data-toggle="buttons">
+                                                                <?php
+                                                                for ($i = 0; $i < $categories_count; $i++) { ?>
+                                                                    <label class="btn btn-secondary active btn-tag px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
+                                                                        <input type="checkbox" autocomplete="off" name="category[]" value="<?= $categories[$i]['name'] ?>"> <?= $categories[$i]['name'] ?>
+                                                                    </label>
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </div>
                                                         </div>
-                                                    </td>
-                                                    <td style="width: 5%">
-                                                        <!-- Delete Requested -->
-                                                        <div class="form-check toggle_sight<?= $sight['id'] ?>" style="display:none;">
-                                                            <input class="form-check-input" type="checkbox" value="1" id="cbDeleteRequested<?= $sight['id'] ?>" name="is_requested_<?= $sight['id'] ?>" <?= ($sight['sights_delete_requested'] == '1' ? 'checked' : '') ?>>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 5%">
-                                                        <!-- Showed -->
-                                                        <div class="form-check toggle_sight<?= $sight['id'] ?>" style="display:none;">
-                                                            <input class="form-check-input" type="checkbox" value="1" id="cbShowed<?= $sight['id'] ?>" name="is_showed_<?= $sight['id'] ?>" <?= ($sight['sight_showed'] == '1' ? 'checked' : '') ?>>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width: 10%">
-                                                        <!-- ID User -->
-                                                        <div class="form-check toggle_sight<?= $sight['id'] ?>" style="display:none; width:100px;margin:0">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
                                                     </td>
                                                 </tr>
                                             </form>

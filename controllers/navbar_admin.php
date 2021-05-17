@@ -9,6 +9,7 @@
             <li class="nav-item"><a class="nav-link <?=($_GET['page'] == 'admin' ? 'active' : '')?>" href="index.php?page=admin"><i class="fas fa-table"></i><span>Administration</span></a></li>
             <li class="nav-item"><a class="nav-link <?=($_GET['page'] == 'admin_users' ? 'active' : '')?>" href="index.php?page=admin_users"><i class="fas fa-user"></i><span>Utilisateurs</span></a></li>
             <li class="nav-item"><a class="nav-link <?=($_GET['page'] == 'admin_sights' ? 'active' : '')?>" href="index.php?page=admin_sights"><i class="far fa-calendar"></i><span>Centres d'intérêt</span></a></li>
+            <li class="nav-item"><a class="nav-link <?=($_GET['page'] == 'admin_categories' ? 'active' : '')?>" href="index.php?page=admin_categories"><i class="far fa-calendar"></i><span>Catégories</span></a></li>
         </ul>
         <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
     </div>

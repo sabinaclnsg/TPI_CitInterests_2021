@@ -52,12 +52,12 @@ require_once 'controllers/sights_controller.php';
                         <form method="POST" enctype="multipart/form-data">
                             <div class="form-row">
                                 <!-- NAME -->
-                                <div class="form-group col-md-10">
+                                <div class="form-group col-lg-10">
                                     <label for="inputName">Nom du centre d'intérêt</label>
                                     <input type="text" name="sights_name" class="form-control" id="inputName" placeholder="Nom">
                                 </div>
                                 <!-- PRICE -->
-                                <div class="form-group col-md-2 input-group">
+                                <div class="form-group col-lg-2 input-group">
                                     <label for="inputPrice" style="width: 100%;">Prix</label>
                                     <input type="number" class="form-control" aria-label="" name="price" id="inputPrice" min="1">
                                     <div class="input-group-append">
@@ -80,12 +80,12 @@ require_once 'controllers/sights_controller.php';
                             </div>
                             <div class="form-row">
                                 <!-- ADRESS -->
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-lg-6">
                                     <label for="inputAddress">Addresse</label>
                                     <input type="text" class="form-control" id="inputAddress" placeholder="Rue, numéro" name="adress">
                                 </div>
                                 <!-- CANTON -->
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-lg-6">
                                     <label for="inputCanton">Canton</label>
                                     <select id="inputCanton" class="form-control" name="canton">
                                         <option selected>Choisir un canton...</option>
@@ -140,11 +140,11 @@ require_once 'controllers/sights_controller.php';
                             ?>
                             <hr>
                             <div class="row mt-5">
-                                <h5>Tranche d'âge :</h5>
-                                <div class="btn-group-toggle" data-toggle="buttons">
+                                <h5 class="col-lg-2 col-md-12"><b>Tranche âge :</b></h5>
+                                <div class="btn-group-toggle col-lg-10 col-md-12" data-toggle="buttons">
                                     <?php
                                     for ($i = 0; $i < $age_limits_count; $i++) { ?>
-                                        <label class="btn btn-secondary active px-1" style="height:20px; font-size:10px; padding:2px;">
+                                        <label class="btn btn-secondary active px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
                                             <input type="checkbox" autocomplete="off" name="age_limit[]" value="<?= $age_limits[$i]['name'] ?>"> <?= $age_limits[$i]['name'] ?>
                                         </label>
                                     <?php
@@ -153,11 +153,11 @@ require_once 'controllers/sights_controller.php';
                                 </div>
                             </div>
                             <div class="row">
-                                <h5>Catégories :</h5>
-                                <div class="btn-group-toggle" data-toggle="buttons">
+                                <h5 class="col-lg-2 col-md-12"><b>Catégories :&nbsp;</b></h5>
+                                <div class="btn-group-toggle col-lg-10 col-md-12" data-toggle="buttons">
                                     <?php
                                     for ($i = 0; $i < $categories_count; $i++) { ?>
-                                        <label class="btn btn-secondary active btn-tag px-1" style="height:20px; font-size:10px; padding:2px;">
+                                        <label class="btn btn-secondary active btn-tag px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
                                             <input type="checkbox" autocomplete="off" name="category[]" value="<?= $categories[$i]['name'] ?>"> <?= $categories[$i]['name'] ?>
                                         </label>
                                     <?php

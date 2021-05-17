@@ -153,6 +153,25 @@ class UserDAO
         }
     }
 
+    public static function UpdateMyInfo($firstname, $lastname, $email, $id)
+    {
+        try {
+            $sql = "UPDATE user SET firstname=:firstname, lastname=:lastname, email=:email WHERE id=:id";
+
+            $db = DBConnection::getConnection();
+            $request = $db->prepare($sql);
+
+            $request->execute([
+                ':firstname' => $firstname,
+                ':lastname' => $lastname,
+                ':email' => $email,
+                ':id' => $id,
+            ]);
+        } catch (mysqli_sql_exception $exception) {
+            throw $exception;
+        }
+    }
+
     public static function UpdateUserPassword($password, $id)
     {
         try {
@@ -174,7 +193,7 @@ class UserDAO
     {
         try {
             $db = DBConnection::getConnection();
-            $sql = "UPDATE `user` SET `profileImg` = :profle_icon WHERE `id` = :id_user";
+            $sql = "UPDATE `user` SET `image` = :profle_icon WHERE `id` = :id_user";
             $request = $db->prepare($sql);
             $request->execute([':id_user' => $id_user, ':profle_icon' => $profile_icon]);
         } catch (mysqli_sql_exception $exception) {
@@ -385,7 +404,7 @@ class UserDAO
     {
         try {
             $db = DBConnection::getConnection();
-            $sql = "UPDATE `user` SET `profileImg` = :named WHERE `profileImg` = :tempname";
+            $sql = "UPDATE `user` SET `image` = :named WHERE `image` = :tempname";
 
             $q = $db->prepare($sql);
             $q->execute(array(

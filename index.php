@@ -113,14 +113,17 @@ if (isset($page)) {
         case 'create_sights':
             require("create_sights.php");
             break;
-        case 'user':
-            require("user.php");
+        case 'user-settings':
+            require("user_settings.php");
             break;
         case 'admin':
             require("admin.php");
             break;
         case 'admin_users':
             require("admin_users.php");
+            break;
+        case 'admin_categories':
+            require("admin_categories.php");
             break;
         case 'admin_sights':
             require("admin_sights.php");
