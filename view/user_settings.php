@@ -6,14 +6,13 @@ require_once 'controllers/user_settings_controller.php';
 <html>
 
 <head>
-<?php require_once 'controllers/head.php' // -- head -- 
-?>
+    <?php require_once 'controllers/head.php' // -- head -- 
+    ?>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
                 <?php require_once 'controllers/navbar_top.php' // -- navbar top -- 
                 ?>
                 <div class="container-fluid" id="main-content">
@@ -28,7 +27,7 @@ require_once 'controllers/user_settings_controller.php';
                                 <!-- USER PROFILE ICON -->
                                 <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="assets/img/profile_icon/<?= $old_image ?>" width="160" height="160" style="object-fit: cover">
                                     <form enctype="multipart/form-data" method="POST" style="box-shadow: none;">
-                                        <label class="btn btn-info">
+                                        <label class="btn btn-yellow">
                                             Changer la photo <input type="file" name="icon_input" onchange="this.form.submit();" accept="image/x-png,image/gif,image/jpeg" hidden>
                                         </label>
                                     </form>
@@ -41,7 +40,7 @@ require_once 'controllers/user_settings_controller.php';
                                     <!-- Paramètres utilisateur -->
                                     <div class="card shadow mb-3">
                                         <div class="card-header py-3">
-                                            <p class="text-info m-0 font-weight-bold">Paramètres de l'utilisateur</p>
+                                            <p class="m-0 font-weight-bold" style="color: #293250;">Paramètres de l'utilisateur</p>
                                         </div>
                                         <div class="card-body">
                                             <form method="POST" action="index.php?page=user-settings">
@@ -58,14 +57,14 @@ require_once 'controllers/user_settings_controller.php';
                                                         <div class="form-group"><label for="email">Adresse E-mail</strong></label><input class="form-control" type="email" id="email" placeholder="utilisateur@exemple.com" name="email" value="<?= $old_email ?>"></div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group"><button class="btn btn-info btn-sm" type="submit" name="submit-information">Sauvegarder</button></div>
+                                                <div class="form-group"><button class="btn btn-yellow btn-sm" type="submit" name="submit-information">Sauvegarder</button></div>
                                             </form>
                                         </div>
                                     </div>
                                     <!-- Paramètres mot de passe -->
                                     <div class="card shadow mb-3">
                                         <div class="card-header py-3">
-                                            <p class="text-info m-0 font-weight-bold">Changer votre mot de passe</p>
+                                            <p class="m-0 font-weight-bold" style="color: #293250;">Changer votre mot de passe</p>
                                         </div>
                                         <div class="card-body">
                                             <form method="POST" action="index.php?page=user-settings">
@@ -75,7 +74,7 @@ require_once 'controllers/user_settings_controller.php';
                                                         <div class="input-group mb-3" id="show_hide_password">
                                                             <input type="password" name="old_pwd" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2">
                                                             <div class="input-group-append">
-                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
+                                                                <a style="color: black;" class="btn btn-yellow" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -86,7 +85,7 @@ require_once 'controllers/user_settings_controller.php';
                                                         <div class="input-group mb-3" id="show_hide_password">
                                                             <input type="password" name="new_pwd" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2">
                                                             <div class="input-group-append">
-                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
+                                                                <a style="color: black;" class="btn btn-yellow" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -95,23 +94,22 @@ require_once 'controllers/user_settings_controller.php';
                                                         <div class="input-group mb-3" id="show_hide_password">
                                                             <input type="password" name="new_pwd_confirm" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2">
                                                             <div class="input-group-append">
-                                                                <a style="color: black;" class="btn btn-outline-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
+                                                                <a style="color: black;" class="btn btn-yellow" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group"><button class="btn btn-info btn-sm" type="submit" name="submit-new-pwd">Confirmer</button></div>
+                                                <div class="form-group"><button class="btn btn-yellow btn-sm" type="submit" name="submit-new-pwd">Confirmer</button></div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
-    <?php include_once 'controllers/footer.php' ?>
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+            <?php include_once 'controllers/footer.php' ?>
+        </div>
     </div>
 
     <script src="assets/js/jquery.min.js"></script>

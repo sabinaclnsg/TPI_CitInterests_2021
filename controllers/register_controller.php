@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) { // if submit is clicked
                     header('location: ./index.php?message=error-pwd-strength&page=register');
                 }
             } else if ($user_dao->EmailUsed($email) && $user_dao->IsArchived($email)) { // checks if email is in use and if user is archived
-                $dbPassword = UserDAO::GetHashedPassword($email); // gets hashed password using submitted email
+                $dbPassword = $user_dao->GetHashedPassword($email); // gets hashed password using submitted email
                 if ($password == $confirmPassword) { // checks if password has at least 8 characters, an upper letter, lower letter, a number and a special character
                     if (password_verify($password, $dbPassword["password"])) { // checks if password submitted matches hashed password from database
                         $user_dao->ActivateUser($email); // activate archived user's account

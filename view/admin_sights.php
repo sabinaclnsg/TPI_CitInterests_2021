@@ -1,5 +1,39 @@
 <?php
-require_once 'controllers/admin_sights_controller.php';
+
+use CitInterests\controllers\Sights;
+use CitInterests\models\SightsDAO;
+
+require_once 'controllers/sights.php';
+
+if (isset($_POST['submit_modify_sight'])) { // if modifications are submitted
+    $sight = new Sights();
+
+    $sight->EditSight();
+} else if (isset($_POST['submit_delete_sight'])) { // if deletion is submitted
+    $sight = new Sights();
+    $delete_sight_id = filter_input(INPUT_POST, 'delete_sight_id', FILTER_SANITIZE_STRING);
+
+    $sight->DeleteSight($delete_sight_id);
+}
+
+// pagination
+if (isset($_POST['show'])) {
+    $limit = $_POST['show'];
+}else{
+    $limit = 5;
+}
+
+$total = $count_sights; // count number of sights
+$pages = ceil($total / $limit); // calculates total pages
+
+$page = min($pages, filter_input(INPUT_GET, 'page_no', FILTER_VALIDATE_INT, array(
+    'options' => array(
+        'default'   => 1,
+        'min_range' => 1,
+    ),
+)));
+
+$offset = ($page - 1) * $limit; // calculates the offset => numbers of row to skip before returning new rows
 ?>
 
 <!DOCTYPE html>
@@ -26,22 +60,26 @@ require_once 'controllers/admin_sights_controller.php';
                         echo $_SESSION['error-message'];
                     }
                     ?>
-                    <div class="card shadow">
+                    <div class="card shadow mb-5">
                         <div class="card-header py-3">
                             <p class="text-primary m-0 font-weight-bold">Centres d'intérêt</p>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select class="form-control form-control-sm custom-select custom-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                        <form method="POST">
+                                            <label>Show&nbsp;
+                                                <select class="form-control form-control-sm custom-select custom-select-sm" name="show">
+                                                    <option value="5" <?=(isset($_POST['show']) && $_POST['show'] == '5' ? 'selected' : '')?>>5</option>
+                                                    <option value="10" <?=(isset($_POST['show']) && $_POST['show'] == '10' ? 'selected' : '')?>>10</option>
+                                                    <option value="15" <?=(isset($_POST['show']) && $_POST['show'] == '15' ? 'selected' : '')?>>15</option>
+                                                    <option value="20" <?=(isset($_POST['show']) && $_POST['show'] == '20' ? 'selected' : '')?>>20</option>
+                                                </select>&nbsp;
+                                            </label>
+                                            <input type="submit" class="btn btn-yellow" value="OK">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -63,8 +101,9 @@ require_once 'controllers/admin_sights_controller.php';
                                     </thead>
                                     <tbody>
                                         <?php
-                                        foreach ($sights as $sight) { ?>
+                                        foreach ($sights_dao->GetSights($limit, $offset) as $sight) { ?>
                                             <form method="POST" enctype="multipart/form-data">
+                                                <!-- Administration Area -->
                                                 <tr onclick="ShowAdminOptions('toggle_sight<?= $sight['id'] ?>')" style="cursor: pointer;">
                                                     <?php
                                                     foreach ($column_names as $column) { ?>
@@ -154,6 +193,12 @@ require_once 'controllers/admin_sights_controller.php';
                                                             <input type="text" class="form-control" placeholder="Adress" aria-label="Adress" value="<?= $sight['adress'] ?>" name="adress_<?= $sight['id'] ?>">
                                                         </div>
                                                     </td>
+                                                    <td style="width: 15%">
+                                                        <!-- Telephone number -->
+                                                        <div class="toggle_sight<?= $sight['id'] ?>" style="display:none;">
+                                                            <input type="text" class="form-control" placeholder="123 456 78 90" aria-label="Telephone" value="<?= $sight['telephone'] ?>" name="telephone_<?= $sight['id'] ?>">
+                                                        </div>
+                                                    </td>
                                                     <td style="width: 10%">
                                                         <!-- Description -->
                                                         <div class="toggle_sight<?= $sight['id'] ?>" style="display:none; width: 300px; margin:0">
@@ -216,15 +261,18 @@ require_once 'controllers/admin_sights_controller.php';
                             </div>
                             <div class="row">
                                 <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of <?= $count_sights ?></p>
+                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to <?=$limit?> of <?= $count_sights ?></p>
                                 </div>
                                 <div class="col-md-6">
                                     <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                         <ul class="pagination">
                                             <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <?php
+                                            for ($i = 1; $i <= $pages; $i++) { ?>
+                                                <li class="page-item <?= ($_GET['page_no'] == $i ? 'active' : '') ?>"><a class="page-link" href="index.php?page=admin_sights&page_no=<?= $i ?>"><?= $i ?></a></li>
+                                            <?php
+                                            }
+                                            ?>
                                             <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
                                         </ul>
                                     </nav>
@@ -258,7 +306,7 @@ require_once 'controllers/admin_sights_controller.php';
                     </form>
                 </div>
             </div>
-            <?php include_once 'controllers/footer.php'?>
+            <?php include_once 'controllers/footer.php' ?>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="assets/js/jquery.min.js"></script>

@@ -11,7 +11,7 @@ require_once 'controllers/login_controller.php';
     <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
-<body style="background: url(&quot;assets/img/other/image-login.jpg&quot;);background-size: cover;height: 1194px;">
+<body style="background: url(&quot;assets/img/other/image-login.jpg&quot;);background-size: cover;">
 
     <?php
     require_once 'controllers/navbar_top.php';
@@ -37,12 +37,12 @@ require_once 'controllers/login_controller.php';
                                         <h4 class="text-dark mb-4">Connexion</h4>
                                     </div>
                                     <form class="user" action="index.php?page=login" method="POST">
-                                        <div class="form-group"><input class="form-control form-control-user" type="email" id="EmailLoginInput" aria-describedby="emailHelp" placeholder="Adresse e-mail" name="email"></div>
-                                        <div class="form-group"><input class="form-control form-control-user" type="password" id="PasswordLoginInput" placeholder="Mot de passe" name="password"></div>
+                                        <div class="form-group"><input class="form-control form-control-user" type="email" id="EmailLoginInput" aria-describedby="emailHelp" placeholder="Adresse e-mail" name="email" style="border-radius: .35rem;"></div>
+                                        <div class="form-group"><input class="form-control form-control-user" type="password" id="PasswordLoginInput" placeholder="Mot de passe" name="password" style="border-radius: .35rem;"></div>
                                         <!-- Google Captcha -->
                                         <div class="g-recaptcha" data-sitekey="6Lc-Rs0aAAAAAMrPSbrIt2atdsc3w2pTSsho1Ukc"></div>
 
-                                        <button class="btn btn-info btn-block text-white btn-user" type="submit" name="submit">Se connecter</button>
+                                        <button class="btn btn-yellow btn-block btn-user" type="submit" name="submit" style="border-radius: .35rem;">Se connecter</button>
 
                                         <hr>
                                     </form>

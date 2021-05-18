@@ -93,7 +93,8 @@ if (isset($_GET['id'])) {
                                     <h3 class="card-title d-flex justify-content-center mt-4"><b>Tarif</b></h3>
                                     <hr>
                                     <p class="card-text d-flex justify-content-center"><?= ($sight_info['price'] != 0 ? 'Adulte : ' . $sight_info['price'] . 'CHF' : 'Gratuit') ?></p>
-
+                                    <hr>
+                                    <p class="card-text d-flex justify-content-center">Téléphone : <?=$sight_info['telephone']?></p>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +113,7 @@ if (isset($_GET['id'])) {
                                         foreach ($sights_dao->GetSightAge($sight_info['id']) as $a) {
                                             $age_limit = $a['name'];
                                             require 'controllers/icons_show.php'; // controller for icons
-                                            echo '<div class=\'col-xl-3 col-md-6 col-lg-6\'><label class=\'btn btn-yellow\' style=\'height:50px; font-size:20px;width:100%\'>' .
+                                            echo '<div class=\'col-xl-3 col-md-6 col-lg-6\'><label class=\'btn btn-yellow pt-2\' style=\'height:48px; font-size:19px;width:100%\'>' .
                                                 $age_icon . '&nbsp;' .
                                                 $age_limit
                                                 . "</label></div>";
@@ -120,7 +121,7 @@ if (isset($_GET['id'])) {
                                         foreach ($sights_dao->GetSightCategory($sight_info['id']) as $c) {
                                             $category = $c['name'];
                                             require 'controllers/icons_show.php'; // controller for icons
-                                            echo '<div class=\'col-xl-3 col-md-6 col-lg-6\'><label class=\'btn btn-yellow\' style=\'height:50px; font-size:20px;width:100%\'>' .
+                                            echo '<div class=\'col-xl-3 col-md-6 col-lg-6\'><label class=\'btn btn-yellow pt-2\' style=\'height:48px; font-size:19px;width:100%\'>' .
                                                 $category_icon . '&nbsp;' .
                                                 $category
                                                 . "</label></div>";
@@ -146,6 +147,7 @@ if (isset($_GET['id'])) {
                                         <div class="col-lg-4 col-12">
                                             <h3 class="card-title"><b>Adresse</b></h3>
                                             <p><?= $sight_info['adress'] ?></p>
+                                            <p>Téléphone : <?=$sight_info['telephone']?></p>
                                             <a href="https://maps.google.com/?q=<?= $lat ?>,<?= $lon ?>" target="_blank">
                                                 <div class="btn btn-yellow">Ouvrir la carte</div>
                                             </a>

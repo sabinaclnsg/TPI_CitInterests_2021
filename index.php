@@ -122,9 +122,6 @@ if (isset($page)) {
         case 'admin_users':
             require("view/admin_users.php");
             break;
-        case 'admin_categories':
-            require("view/admin_categories.php");
-            break;
         case 'admin_sights':
             require("view/admin_sights.php");
             break;

@@ -1,4 +1,6 @@
 <?php
+// gets data from ajax POST
+
 require_once '../models/sightsDAO.php';
 require_once '../controllers/filter_controller.php';
 
@@ -16,30 +18,28 @@ $result = "";
 $img_file_path = 'assets/img/sights/';
 
 if (isset($_POST['filter_data']) && $_POST['filter_data'] != 'empty') {
-    $ids = array();
+
+    // arrays filled with id
+    $categories_array = array();
+    $ages_array = array();
+    $cantons_array = array();
+    $budget_array = array();
 
     foreach ($_POST['filter_data'] as $data) {
-        if ($sights_dao->FilterByCanton($data) != "") { // checks if data entered is a canton and if it exists
-            array_push($ids, SightsDAO::FilterByCanton($data));
-        }
-        if ($sights_dao->GetCategoryIdByName($data) != 0) { // checks if data entered is a category and if it exists
-            array_push($ids, SightsDAO::FilterByCategory(SightsDAO::GetCategoryIdByName($data)[0]));
-        }
-        if ($sights_dao->GetAgeIdByName($data) != 0) { // checks if data entered is an age_limit and if it exists
-            array_push($ids, SightsDAO::FilterByAge(SightsDAO::GetAgeIdByName($data)[0]));
-        }
-        if ($sights_dao->FilterByBudget($data) != "") { // checks if data entered is a budget and if it exists
-            array_push($ids, SightsDAO::FilterByBudget($data));
+        if ($sights_dao->GetCategoryIdByName($data) != false) { // checks if data entered is a category and if it exists
+            array_push($categories_array, $data);
+        } else if ($sights_dao->GetAgeIdByName($data) != false) { // checks if data entered is an age_limit and if it exists
+            array_push($ages_array, $data);
+        } else if (in_array($data, $cantons)) { // checks if data entered is a canton and if it exists
+            array_push($cantons_array, $data);
+        } else if ($sights_dao->FilterByBudget($data) != false) { // checks if data entered is a budget and if it exists
+            array_push($budget_array, $data);
         }
     }
 
-    foreach ($ids as $id) {
-        foreach ($id as $id_sight) {
-            $sights_dao->UpdateSightShow($id_sight[0]);
-        }
-    }
+    //echo $sights_dao->Filter($cantons_array, $categories_array, $ages_array, $budget_array);
 
-    foreach ($sights_dao->GetShowedSights() as $sight_show) {
+    foreach ($sights_dao->Filter($cantons_array, $categories_array, $ages_array, $budget_array) as $sight_show) {
         $user = $sights_dao->GetUserOfSights($sight_show['id']);
         $opening_hour = $sights_dao->GetOpeningHourByDay($today_day, $sight_show['id'])[$today_day];
         $closing_hour = $sights_dao->GetClosingHourByDay($today_day, $sight_show['id'])[$today_day];
@@ -53,16 +53,9 @@ if (isset($_POST['filter_data']) && $_POST['filter_data'] != 'empty') {
     }
 
     echo $result;
-}
-
-if (isset($_POST['search_data'])) {
-    $sights_dao->ResetSightShow();
+} else if (isset($_POST['search_data'])) { // if user searched
 
     foreach ($sights_dao->Search($_POST['search_data']) as $sight_show) {
-        $result.= $filter->FilterSights($sight_show, 'assets/img/sights/', 'Open');
-    }
-
-    foreach ($sights_dao->GetShowedSights() as $sight_show) {
         $user = $sights_dao->GetUserOfSights($sight_show['id']);
         $opening_hour = $sights_dao->GetOpeningHourByDay($today_day, $sight_show['id'])[$today_day];
         $closing_hour = $sights_dao->GetClosingHourByDay($today_day, $sight_show['id'])[$today_day];
@@ -76,7 +69,7 @@ if (isset($_POST['search_data'])) {
     }
 
     echo $result;
-} else {
+} else { // if no filter is used
     foreach ($sights_dao->GetValidatedSights() as $sight_show) {
         $user = $sights_dao->GetUserOfSights($sight_show['id']);
         $opening_hour = $sights_dao->GetOpeningHourByDay($today_day, $sight_show['id'])[$today_day];

@@ -11,8 +11,6 @@ $count_validated_sights = $sights_dao->CountValidatedSightsAmount()[0];
 $sights = $sights_dao->GetValidatedSights();
 
 $result = "";
-$sights_dao->ResetSightShow();
-
 ?>
 
 <!DOCTYPE html>

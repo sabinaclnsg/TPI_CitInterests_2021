@@ -11,7 +11,7 @@ require_once './controllers/register_controller.php';
     <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
-<body style="background: url(&quot;assets/img/other/image-register.jpg&quot;);background-size: cover;height: 1145px;">
+<body style="background: url(&quot;assets/img/other/image-register.jpg&quot;);background-size: cover;">
     <?php require_once 'controllers/navbar_top.php' // -- navbar top --  
     ?>
 
@@ -35,21 +35,23 @@ require_once './controllers/register_controller.php';
                             </div>
                             <form class="user" method="POST" action="index.php?page=register">
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="FirstNameInput" placeholder="Prénom" name="firstname" value="<?= $firstname ?>"></div>
-                                    <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="LastNameInput" placeholder="Nom" name="lastname" value="<?= $lastname ?>"></div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="FirstNameInput" placeholder="Prénom" name="firstname" value="<?= $firstname ?>" style="border-radius: .35rem;"></div>
+                                    <div class="col-sm-6"><input class="form-control form-control-user" type="text" id="LastNameInput" placeholder="Nom" name="lastname" value="<?= $lastname ?>" style="border-radius: .35rem;"></div>
                                 </div>
-                                <div class="form-group"><input class="form-control form-control-user" type="email" id="EmailInput" aria-describedby="emailHelp" placeholder="Adresse e-mail" name="email" value="<?= $email ?>"></div>
+                                <div class="form-group">
+                                    <input class="form-control form-control-user" type="email" id="EmailInput" aria-describedby="emailHelp" placeholder="Adresse e-mail" name="email" value="<?= $email ?>" style="border-radius: .35rem;">
+                                </div>
                                 <div class="form-group row" id="show_hide_password">
                                     <div class="col-sm-6 mb-3 mb-sm-0 input-group">
-                                        <input class="form-control form-control-user" type="password" id="PasswordInput" placeholder="Mot de passe" name="password">
+                                        <input class="form-control form-control-user" type="password" id="PasswordInput" placeholder="Mot de passe" name="password" style="border-top-left-radius: .35rem; border-bottom-left-radius:.35rem">
                                         <div class="input-group-append">
-                                            <a style="color: white; border-top-right-radius: 10rem; border-bottom-right-radius: 10rem; padding-top: 12px;" class="btn btn-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
+                                            <a style="padding-top: 12px;" class="btn btn-yellow" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 input-group">
-                                        <input class="form-control form-control-user" type="password" id="ConfirmPasswordInput" placeholder="Confirmer le mot de passe" name="confirm-password">
+                                        <input class="form-control form-control-user" type="password" id="ConfirmPasswordInput" placeholder="Confirmer le mot de passe" name="confirm-password" style="border-top-left-radius: .35rem; border-bottom-left-radius:.35rem">
                                         <div class="input-group-append">
-                                            <a style="color: white; border-top-right-radius: 10rem; border-bottom-right-radius: 10rem; padding-top: 12px;" class="btn btn-info" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
+                                            <a style=" padding-top: 12px;" class="btn btn-yellow" id="button-addon2"><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +59,7 @@ require_once './controllers/register_controller.php';
                                     <!-- Google Captcha -->
                                     <div class="g-recaptcha" data-sitekey="6Lc-Rs0aAAAAAMrPSbrIt2atdsc3w2pTSsho1Ukc"></div>
                                 </div>
-                                <button class="btn btn-info btn-block text-white btn-user" type="submit" name="submit">S'inscrire</button>
+                                <button class="btn btn-yellow btn-block btn-user" type="submit" name="submit" style="border-radius: .35rem;">S'inscrire</button>
                                 <hr>
                             </form>
 

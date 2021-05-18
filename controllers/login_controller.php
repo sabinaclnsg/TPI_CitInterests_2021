@@ -49,12 +49,12 @@ if (isset($_POST['submit'])) {
                     header('location: ./index.php?message=error-archived-user&page=register'); // user archived
 
                 } else {
-                    $dbPassword = UserDAO::GetHashedPassword($email); // gets hashed password using submitted email
+                    $dbPassword = $user_dao->GetHashedPassword($email); // gets hashed password using submitted email
 
                     if (password_verify($password, $dbPassword["password"])) { // checks if password submitted matches hashed password from database
                         // sets user as connected
                         $_SESSION['connected'] = true;
-                        $_SESSION['connected_user_id'] = UserDAO::GetUserId_ParamEmail($email)['id'];
+                        $_SESSION['connected_user_id'] = $user_dao->GetUserId_ParamEmail($email)['id'];
                         header('Location: index.php?message=logged&page=homepage');
                     } else {
                         header('Location: index.php?message=error-login&page=login');

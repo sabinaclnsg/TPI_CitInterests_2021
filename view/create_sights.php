@@ -5,7 +5,7 @@ use CitInterests\models\SightsDAO;
 use CitInterests\models\UserDAO;
 
 require_once 'controllers/filter_controller.php';
-require_once 'controllers/sights_controller.php';
+require_once 'controllers/sights.php';
 
 if (isset($_POST['submit'])) {
     $sight = new Sights();
@@ -16,8 +16,8 @@ if (isset($_POST['submit'])) {
 <html>
 
 <head>
-<?php require_once 'controllers/head.php' // -- head -- 
-?>
+    <?php require_once 'controllers/head.php' // -- head -- 
+    ?>
     <!-- Google Captcha -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
@@ -103,9 +103,15 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
                             <!-- IMG INPUT -->
-                            <div class="form-group mb-5">
-                                <label for="inputImage" class="form-label">Choisir l'image</label>
-                                <input class="form-control" type="file" id="inputImage" name="image_file" accept="image/*">
+                            <div class="form-row mb-5">
+                                <div class="form-group col-lg-6">
+                                    <label for="inputImage" class="form-label">Choisir l'image</label>
+                                    <input class="form-control" type="file" id="inputImage" name="image_file" accept="image/*">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="inputTel">No. Téléphone</label>
+                                    <input type="tel" class="form-control" id="inputTel" placeholder="123 456 78 90" name="telephone" pattern="[0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}">
+                                </div>
                             </div>
                             <hr>
                             <div class="form-row">
@@ -176,7 +182,7 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
             </div>
-            <?php include_once 'controllers/footer.php'?>
+            <?php include_once 'controllers/footer.php' ?>
         </div>
     </div>
 
