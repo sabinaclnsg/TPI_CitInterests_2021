@@ -1,5 +1,5 @@
 <?php
-require_once 'controllers/logout_controller.php';
+require_once 'controllers/logout.php';
 require_once './models/userDAO.php';
 
 use CitInterests\models\UserDAO;

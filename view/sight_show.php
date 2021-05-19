@@ -133,7 +133,7 @@ if (isset($_GET['id'])) {
                                     <div class="row my-5">
                                         <div class="col-lg-8 col-12">
                                             <?php
-                                            require_once './controllers/map_controller.php';
+                                            require_once './controllers/map.php';
 
                                             // get lat and lon with adress
                                             $lat = getLatLonWithAdress($sight_info['adress'])[0];

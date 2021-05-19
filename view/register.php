@@ -1,5 +1,5 @@
 <?php
-require_once './controllers/register_controller.php';
+require_once './controllers/register.php';
 ?>
 <!DOCTYPE html>
 <html>

@@ -3,6 +3,9 @@
     src: url(../fonts/open_sans/OpenSans-Regular.ttf);
 }
 
+.modal-backdrop {
+    z-index: -1;
+}
 
 /* Media Queries */
 

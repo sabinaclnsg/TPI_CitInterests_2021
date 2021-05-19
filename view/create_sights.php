@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
                             <div class="form-row mb-5">
                                 <div class="form-group col-lg-6">
                                     <label for="inputImage" class="form-label">Choisir l'image</label>
-                                    <input class="form-control" type="file" id="inputImage" name="image_file" accept="image/*">
+                                    <input class="form-control" type="file" id="inputImage" name="image_file" accept="image/png, image/jpeg">
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label for="inputTel">No. Téléphone</label>

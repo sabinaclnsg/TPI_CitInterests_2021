@@ -1,4 +1,5 @@
 <?php
+// filter display
 require_once 'filter_controller.php';
 ?>
 <div class="container">

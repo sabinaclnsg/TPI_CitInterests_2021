@@ -1,5 +1,5 @@
 <?php
-require_once 'controllers/user_settings_controller.php';
+require_once 'controllers/user_settings.php';
 ?>
 
 <!DOCTYPE html>

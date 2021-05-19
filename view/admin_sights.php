@@ -14,17 +14,24 @@ if (isset($_POST['submit_modify_sight'])) { // if modifications are submitted
     $delete_sight_id = filter_input(INPUT_POST, 'delete_sight_id', FILTER_SANITIZE_STRING);
 
     $sight->DeleteSight($delete_sight_id);
+} else if (isset($_POST['submit_edit_tags'])) { // if edit tags is submitted
+    $sight = new Sights();
+    $edit_tags_sight_id = filter_input(INPUT_POST, 'edit_tags_sight_id', FILTER_SANITIZE_STRING);
+    var_dump($edit_tags_sight_id);
+
+    $sight->EditTags($edit_tags_sight_id);
 }
 
 // pagination
 if (isset($_POST['show'])) {
-    $limit = $_POST['show'];
-}else{
+    $_SESSION['show'] = $_POST['show'];
+    $limit = $_SESSION['show'];
+} else {
     $limit = 5;
 }
 
 $total = $count_sights; // count number of sights
-$pages = ceil($total / $limit); // calculates total pages
+$pages = ceil($total / $_SESSION['show']); // calculates total pages
 
 $page = min($pages, filter_input(INPUT_GET, 'page_no', FILTER_VALIDATE_INT, array(
     'options' => array(
@@ -33,7 +40,7 @@ $page = min($pages, filter_input(INPUT_GET, 'page_no', FILTER_VALIDATE_INT, arra
     ),
 )));
 
-$offset = ($page - 1) * $limit; // calculates the offset => numbers of row to skip before returning new rows
+$offset = ($page - 1) * $_SESSION['show']; // calculates the offset => numbers of row to skip before returning new rows
 ?>
 
 <!DOCTYPE html>
@@ -68,13 +75,13 @@ $offset = ($page - 1) * $limit; // calculates the offset => numbers of row to sk
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                        <form method="POST">
+                                        <form method="POST" action="index.php?page=admin_sights&page_no=1">
                                             <label>Show&nbsp;
                                                 <select class="form-control form-control-sm custom-select custom-select-sm" name="show">
-                                                    <option value="5" <?=(isset($_POST['show']) && $_POST['show'] == '5' ? 'selected' : '')?>>5</option>
-                                                    <option value="10" <?=(isset($_POST['show']) && $_POST['show'] == '10' ? 'selected' : '')?>>10</option>
-                                                    <option value="15" <?=(isset($_POST['show']) && $_POST['show'] == '15' ? 'selected' : '')?>>15</option>
-                                                    <option value="20" <?=(isset($_POST['show']) && $_POST['show'] == '20' ? 'selected' : '')?>>20</option>
+                                                    <option value="5" <?= (isset($_SESSION['show']) && $_SESSION['show'] == '5' ? 'selected' : '') ?>>5</option>
+                                                    <option value="10" <?= (isset($_SESSION['show']) && $_SESSION['show'] == '10' ? 'selected' : '') ?>>10</option>
+                                                    <option value="15" <?= (isset($_SESSION['show']) && $_SESSION['show'] == '15' ? 'selected' : '') ?>>15</option>
+                                                    <option value="20" <?= (isset($_SESSION['show']) && $_SESSION['show'] == '20' ? 'selected' : '') ?>>20</option>
                                                 </select>&nbsp;
                                             </label>
                                             <input type="submit" class="btn btn-yellow" value="OK">
@@ -145,8 +152,14 @@ $offset = ($page - 1) * $limit; // calculates the offset => numbers of row to sk
                                                     }
                                                     ?>
 
+
                                                     <td id="unclickable" class="">
                                                         <input type="text" name="id_sight" value="<?= $sight['id'] ?>" hidden>
+                                                    </td>
+                                                    <td>
+                                                        <!-- Edit tags -->
+                                                        <a id="<?= $sight['id'] ?>" style="box-shadow: none;" data-toggle="modal" data-target="#edit_tags_<?= $sight['id'] ?>" class="open-modal-2 mr-3"><i class="fas fa-tags"></i></i></a>
+                                                    </td>
                                                     <td>
                                                         <!-- Edit sight -->
                                                         <button type="submit" class="btn" name="submit_modify_sight" style="box-shadow: none;"><i class="fas fa-check" style="color: green;"></i></button>
@@ -155,8 +168,68 @@ $offset = ($page - 1) * $limit; // calculates the offset => numbers of row to sk
                                                         <!-- Delete sight -->
                                                         <a id="<?= $sight['id'] ?>" style="box-shadow: none;" data-toggle="modal" data-target="#confirm_delete_sight" class="open-modal mr-3"><i class="fas fa-minus" style="color: red;"></i></a>
                                                     </td>
-                                                    </td>
                                                 </tr>
+                                                <!-- Modal Edit Tags -->
+                                                <div class="modal fade" id="edit_tags_<?= $sight['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="Modal1CenterTitle" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <form method="POST">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="Modal1CenterTitle">Modifier les catégories/Âges</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" value="<?= $sight['id'] ?>" id="modal_edit_tags_<?= $sight['id'] ?>" name="edit_tags_sight_id">
+                                                                    <div class="container">
+                                                                    <!-- Category Tags -->
+                                                                    <h5 class="row">Catégories :&nbsp;</h5>
+                                                                    <div class="row mb-5">
+                                                                        <div class="btn-group-toggle col-12" data-toggle="buttons">
+                                                                            <?php
+                                                                            foreach ($sights_dao->GetCategories() as $category) {
+                                                                                if ($sights_dao->SightHasCategory($category['id'], $sight['id'])) { // checks if sights has this category
+                                                                                    $checked = true;
+                                                                                } else {
+                                                                                    $checked = false;
+                                                                                }
+                                                                            ?>
+                                                                                <label class="btn btn-secondary active btn-tag px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
+                                                                                    <input type="checkbox" autocomplete="off" name="category[]" value="<?= $category['name'] ?>" <?= $checked == true ? 'checked' : '' ?>> <?= $category['name'] ?>
+                                                                                </label>
+                                                                            <?php } ?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Age Limit Tags -->
+                                                                    <h5 class="row">Tranches d'âge :&nbsp;</h5>
+                                                                    <div class="row">
+                                                                        <div class="btn-group-toggle col-12" data-toggle="buttons">
+                                                                            <?php
+                                                                            foreach ($sights_dao->GetAgeLimits() as $age_limit) {
+                                                                                if ($sights_dao->SightHasAgeLimit($age_limit['id'], $sight['id'])) { // checks if sights has this age limit
+                                                                                    $checked = true;
+                                                                                } else {
+                                                                                    $checked = false;
+                                                                                }
+                                                                            ?>
+                                                                                <label class="btn btn-secondary active btn-tag px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
+                                                                                    <input type="checkbox" autocomplete="off" name="age_limit[]" value="<?= $age_limit['name'] ?>" <?= $checked == true ? 'checked' : '' ?>> <?= $age_limit['name'] ?>
+                                                                                </label>
+                                                                            <?php } ?>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                                    <button type="submit" class="btn btn-danger" name="submit_edit_tags">Modifier</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                                 <tr class="table-warning">
                                                     <td style="width: 5%">
                                                         <!-- ID -->
@@ -234,16 +307,12 @@ $offset = ($page - 1) * $limit; // calculates the offset => numbers of row to sk
                                                             <input class="form-check-input" type="checkbox" value="1" id="cbDeleteRequested<?= $sight['id'] ?>" name="is_requested_<?= $sight['id'] ?>" <?= ($sight['sights_delete_requested'] == '1' ? 'checked' : '') ?>>
                                                         </div>
                                                     </td>
-                                                    <td style="width: 5%">
-                                                        <!-- Showed -->
-                                                        <div class="form-check toggle_sight<?= $sight['id'] ?>" style="display:none;">
-                                                            <input class="form-check-input" type="checkbox" value="1" id="cbShowed<?= $sight['id'] ?>" name="is_showed_<?= $sight['id'] ?>" <?= ($sight['sight_showed'] == '1' ? 'checked' : '') ?>>
-                                                        </div>
-                                                    </td>
                                                     <td style="width: 10%">
                                                         <!-- ID User -->
                                                         <div class="form-check toggle_sight<?= $sight['id'] ?>" style="display:none; width:100px;margin:0">
                                                         </div>
+                                                    </td>
+                                                    <td>
                                                     </td>
                                                     <td>
                                                     </td>
@@ -261,7 +330,7 @@ $offset = ($page - 1) * $limit; // calculates the offset => numbers of row to sk
                             </div>
                             <div class="row">
                                 <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to <?=$limit?> of <?= $count_sights ?></p>
+                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to <?= $limit ?> of <?= $count_sights ?></p>
                                 </div>
                                 <div class="col-md-6">
                                     <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
@@ -269,7 +338,7 @@ $offset = ($page - 1) * $limit; // calculates the offset => numbers of row to sk
                                             <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
                                             <?php
                                             for ($i = 1; $i <= $pages; $i++) { ?>
-                                                <li class="page-item <?= ($_GET['page_no'] == $i ? 'active' : '') ?>"><a class="page-link" href="index.php?page=admin_sights&page_no=<?= $i ?>"><?= $i ?></a></li>
+                                                <li class="page-item <?= (isset($_GET['page_no']) ? ($_GET['page_no'] == $i ? 'active' : '') : ($i==1?'active':'')) ?>"><a class="page-link" href="index.php?page=admin_sights&page_no=<?= $i ?>"><?= $i ?></a></li>
                                             <?php
                                             }
                                             ?>
@@ -283,7 +352,7 @@ $offset = ($page - 1) * $limit; // calculates the offset => numbers of row to sk
                 </div>
             </div>
 
-            <!-- Modal Delete sight -->
+            <!-- Modal Delete Sight -->
             <div class="modal fade" id="confirm_delete_sight" tabindex="-1" role="dialog" aria-labelledby="Modal1CenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <form method="POST">
@@ -328,11 +397,6 @@ $offset = ($page - 1) * $limit; // calculates the offset => numbers of row to sk
         $(".open-modal").click(function(event) {
             var sightId = $(this).attr('id');
             $("#modal_delete_sight_id").val(sightId);
-        });
-
-        $(".open-modal-2").click(function(event) {
-            var sightId = $(this).attr('id');
-            $("#modal_delete_sight_posts_id").val(sightId);
         });
     </script>
 </body>

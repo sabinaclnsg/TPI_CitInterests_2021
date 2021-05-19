@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) { // if submit is clicked
     {
         $fields_string = '';
         $fields = array(
-            'secret' => '6Lc-Rs0aAAAAAKrj5nZdyUOsD_LBq4efkS8qLnYI',
+            'secret' => '6Lc-Rs0aAAAAAKrj5nZdyUOsD_LBq4efkS8qLnYI', // secret key provided by google
             'response' => $user_response
         );
         foreach ($fields as $key => $value)
@@ -47,8 +47,7 @@ if (isset($_POST['submit'])) { // if submit is clicked
     // if the captcha hasnt been checked
     if (!$res['success']) {
         header('Location: index.php?message=error-captcha&page=login');
-    } else {
-
+    } else { // create user
         if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($password) && !empty($confirmPassword)) { // verifies if all inputs are filled
 
             if (!$user_dao->EmailUsed($email)) { // checks if the email submitted isn't already in use

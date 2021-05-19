@@ -5,6 +5,7 @@ function getLatLonWithAdress($adress)
     // adds special characters instead of spaces
     $adress = urlencode($adress);
 
+    // using nomination tool to search data by adress (geocoding)
     $url = "http://nominatim.openstreetmap.org/search?email=contact.citinterests@gmail.com&q=$adress&format=json&polygon=1&addressdetails=1";
 
     // get the json response

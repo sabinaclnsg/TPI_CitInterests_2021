@@ -403,6 +403,71 @@ class SightsDAO
         }
     }
 
+    public static function SightHasCategory($id_category, $id_sights){
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "SELECT * FROM sights_contains_category WHERE id_category = :id_category AND id_sights = :id_sights";
+
+            $request = $db->prepare($sql);
+            $request->execute([':id_category' => $id_category, ':id_sights' => $id_sights]);
+            if ($request->fetch() != 0) {
+                return true;
+            }else{
+                return false;
+            }
+        } catch (mysqli_sql_exception $exception) {
+            return false;
+        }
+    }
+
+    public static function SightHasAgeLimit($id_age_limit, $id_sights){
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "SELECT * FROM sights_has_age_limit WHERE id_age_limit = :id_age_limit AND id_sights = :id_sights";
+
+            $request = $db->prepare($sql);
+            $request->execute([':id_age_limit' => $id_age_limit, ':id_sights' => $id_sights]);
+            if ($request->fetch() != 0) {
+                return true;
+            }else{
+                return false;
+            }
+        } catch (mysqli_sql_exception $exception) {
+            return false;
+        }
+    }
+
+    public static function DeleteSightsAgeLimits($id_sights){
+        try {
+            $sql = "DELETE FROM sights_has_age_limit WHERE id_sights=:id_sights";
+
+            $db = DBConnection::getConnection();
+            $request = $db->prepare($sql);
+
+            $request->execute([
+                ':id_sights' => $id_sights,
+            ]);
+        } catch (mysqli_sql_exception $exception) {
+            throw $exception;
+        }
+    }
+
+    public static function DeleteSightsCategories($id_sights){
+        try {
+            $sql = "DELETE FROM sights_contains_category WHERE id_sights=:id_sights";
+
+            $db = DBConnection::getConnection();
+            $request = $db->prepare($sql);
+
+            $request->execute([
+                ':id_sights' => $id_sights,
+            ]);
+        } catch (mysqli_sql_exception $exception) {
+            throw $exception;
+        }
+    }
+
+
     public static function FilterByAge($id_age)
     {
         $db = DBConnection::getConnection();
@@ -497,16 +562,15 @@ class SightsDAO
     public static function LinkCategoryToSights($category_name, $id_sights)
     {
         try {
-            $sql = "INSERT INTO sights_contains_category (`id_category`, `id_sights`) 
-            SELECT id, :id_sights
-            FROM category WHERE name = :category_name";
+            $category_id = SightsDAO::GetCategoryIdByName($category_name)[0];
+            $sql = "INSERT INTO sights_contains_category (`id_category`, `id_sights`) VALUES (:category_id, :id_sights)";
 
             $db = DBConnection::getConnection();
             $request = $db->prepare($sql);
 
             $request->execute([
-                ':category_name' => $category_name,
                 ':id_sights' => $id_sights,
+                ':category_id' => $category_id,
             ]);
         } catch (mysqli_sql_exception $exception) {
             throw $exception;

@@ -1,5 +1,6 @@
 <?php
 
+// function for the verification of the password strength using regex
 function password_strength($password)
 {
     $password_length = 8;

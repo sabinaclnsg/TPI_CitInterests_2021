@@ -1,6 +1,6 @@
 <?php
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
+// script highly inspired by https://github.com/PHPMailer/PHPMailer
+// libraries included in the github
 namespace CitInterests\mailer;
 
 use PHPMailer\PHPMailer\PHPMailer;

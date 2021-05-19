@@ -2,7 +2,7 @@
 namespace CitInterests\controllers;
 
 require_once './models/userDAO.php';
-require_once 'mailer_controller.php';
+require_once 'mailer.php';
 
 use CitInterests\models\UserDAO;
 use CitInterests\mailer\Mailer;

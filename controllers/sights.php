@@ -23,7 +23,7 @@ $count_sights = $sights_dao->CountSights()[0];
 $count_columns = $sights_dao->CountColumns();
 $column_names = $sights_dao->GetColumnNames();
 $cantons = array('Genève', 'Fribourg', 'Vaud', 'Valais', 'Neuchâtel', 'Jura');
-$column_names_fr = array('ID', 'Nom', 'Canton', 'Adresse', 'Téléphone', 'Description', 'Prix', 'Image', 'Valider', 'Supprimer', 'Afficher', 'ID utilisateur');
+$column_names_fr = array('ID', 'Nom', 'Canton', 'Adresse', 'Téléphone', 'Description', 'Prix', 'Image', 'Valider', 'Supprimer', 'ID utilisateur');
 
 class Sights
 {
@@ -101,7 +101,7 @@ class Sights
                     } catch (\Throwable $th) {
                         throw $th;
                     }
-                }else{
+                } else {
                     header('location: ./index.php?message=error-email&page=create_sights'); // not all inputs are filled
                 }
             } else {
@@ -164,7 +164,7 @@ class Sights
             $image_type = $img_name[1];
 
             $img_name = $img_name[0] . uniqid() . "." . $image_type; // creates a random name for the image using uniqid()
-            move_uploaded_file($image_file['tmp_name'], 'assets/img/sights/' . $img_name);
+            move_uploaded_file($image_file['tmp_name'], 'assets/img/sights/' . $img_name); // move image file to a folder
 
             $new_image = $img_name;
         } else {
@@ -172,6 +172,31 @@ class Sights
         }
 
         $sights_dao->UpdateSightInfo($name, $canton, $adress, $telephone, $description, $price, $is_validated, $is_requested, $is_showed, $new_image, $id_sights);
+        header('location: ./index.php?page=admin_sights&message=info-changed');
+    }
+
+    // edit categories and age limits
+    public static function EditTags($id_sights)
+    {
+        $sights_dao = new SightsDAO();
+
+        $sights_contains_category = $_POST['category'];
+        $sights_has_age_limit = $_POST['age_limit'];
+
+        $sights_dao->DeleteSightsAgeLimits($id_sights);
+        $sights_dao->DeleteSightsCategories($id_sights);
+
+        if (!empty($sights_contains_category) && !empty($sights_has_age_limit)) {
+            // link categories to sights
+            foreach ($sights_contains_category as $category) {
+                $sights_dao->LinkCategoryToSights($category, $id_sights);
+            }
+            // link age limits to sights
+            foreach ($sights_has_age_limit as $age_limit) {
+                $sights_dao->LinkAgeLimitToSights($age_limit, $id_sights);
+            }
+        }
+
         header('location: ./index.php?page=admin_sights&message=info-changed');
     }
 }

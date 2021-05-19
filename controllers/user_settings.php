@@ -70,6 +70,7 @@ if (isset($_POST['submit-information'])) {
     }
 }
 
+// change user's password
 if (isset($_POST['submit-new-pwd'])) {
     if (!empty($oldPwd) && !empty($newPwd) && !empty($newPwdConfirm)) {
         $dbPassword = $user_dao->GetHashedPassword($user_data[0]['email']);

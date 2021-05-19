@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
     {
         $fields_string = '';
         $fields = array(
-            'secret' => '6Lc-Rs0aAAAAAKrj5nZdyUOsD_LBq4efkS8qLnYI',
+            'secret' => '6Lc-Rs0aAAAAAKrj5nZdyUOsD_LBq4efkS8qLnYI', // secret key provided by google
             'response' => $user_response
         );
         foreach ($fields as $key => $value)
