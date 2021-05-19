@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="1" id="open24h" name="open_24h">
                                         <label class="form-check-label" for="open24h">
-                                            Ouvert h24
+                                            Ouvert 24/7
                                         </label>
                                     </div>
                                 </div>

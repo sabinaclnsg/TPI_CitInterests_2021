@@ -10,53 +10,10 @@ require_once 'dbConnection.php';
 
 class SightsDAO
 {
-    public static function GetColumnNames()
-    {
-        $db = DBConnection::getConnection();
-        $sql = "DESCRIBE sights";
+    /* -- GET SIGHTS -- */
 
-        $request = $db->prepare($sql);
-        $request->execute();
-        return $request->fetchAll(PDO::FETCH_COLUMN);
-    }
-
-    public static function GetEnumValues($table, $column)
-    {
-        $db = DBConnection::getConnection();
-        $sql = "SELECT column_type FROM information_schema.columns WHERE table_name = :table AND column_name = :column";
-
-        $request = $db->prepare($sql);
-        $request->execute([':table' => $table, ':column' => $column]);
-        return $request->fetch();
-    }
-
-    public static function CountValidatedSightsAmount()
-    {
-        $db = DBConnection::getConnection();
-        $request = $db->query('SELECT count(*) from sights WHERE validated = 1');
-
-        $request->execute();
-        return $request->fetch();
-    }
-
-    public static function CountSights()
-    {
-        $db = DBConnection::getConnection();
-        $request = $db->query('SELECT count(*) from sights');
-
-        $request->execute();
-        return $request->fetch();
-    }
-
-    public static function CountColumns()
-    {
-        $db = DBConnection::getConnection();
-        $request = $db->query('SELECT * from sights');
-
-        $request->execute();
-        return $request->columnCount();
-    }
-
+    // get all validated sights
+    // returns array of data
     public static function GetValidatedSights()
     {
         $db = DBConnection::getConnection();
@@ -67,6 +24,9 @@ class SightsDAO
         return $request->fetchAll();
     }
 
+    // get all sights, useful for admin page
+    // parameter(s) : limit offset
+    // returns array of data
     public static function GetSights($limit, $offset)
     {
         $db = DBConnection::getConnection();
@@ -80,6 +40,9 @@ class SightsDAO
         return $request->fetchAll();
     }
 
+    // get a sight's image
+    // parameter(s) : id_sights
+    // returns image
     public static function GetSightImage($id_sights)
     {
         $db = DBConnection::getConnection();
@@ -90,6 +53,9 @@ class SightsDAO
         return $request->fetch();
     }
 
+    // get a sight's information
+    // parameter(s) : id_sights
+    // returns array of data
     public static function GetSightById($id_sights)
     {
         $db = DBConnection::getConnection();
@@ -100,31 +66,9 @@ class SightsDAO
         return $request->fetch();
     }
 
-    public static function GetShowedSights()
-    {
-        $db = DBConnection::getConnection();
-        $sql = "SELECT * FROM sights WHERE sight_showed = 1";
-
-        $request = $db->prepare($sql);
-        $request->execute();
-        return $request->fetchAll();
-    }
-
-    public static function SightsIsValidated($id_sights)
-    {
-        $db = DBConnection::getConnection();
-        $sql = "SELECT validated FROM sights WHERE id = :id_sights";
-
-        $request = $db->prepare($sql);
-        $request->execute([':id_sights' => $id_sights]);
-
-        if ($request->fetch(PDO::FETCH_ASSOC)['validated'] == '1') {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    // get the user of a sight
+    // parameter(s) : id_sights
+    // returns array of data (user's data)
     public static function GetUserOfSights($id_sights)
     {
         $db = DBConnection::getConnection();
@@ -135,16 +79,135 @@ class SightsDAO
         return $request->fetchAll();
     }
 
-    public static function CreateSight($name, $price, $descripition, $adress, $canton, $telephone, $image, $user)
+    // get all column names from sights table
+    // returns array of data
+    public static function GetColumnNames()
     {
+        $db = DBConnection::getConnection();
+        $sql = "DESCRIBE sights";
 
+        $request = $db->prepare($sql);
+        $request->execute();
+        return $request->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    // count all validated sights
+    // returns count sum
+    public static function CountValidatedSightsAmount()
+    {
+        $db = DBConnection::getConnection();
+        $request = $db->query('SELECT count(*) from sights WHERE validated = 1');
+
+        $request->execute();
+        return $request->fetch();
+    }
+
+    // count all sights
+    // returns array of data
+    public static function CountSights()
+    {
+        $db = DBConnection::getConnection();
+        $request = $db->query('SELECT count(*) from sights');
+
+        $request->execute();
+        return $request->fetch();
+    }
+
+    // count all column names from sights table
+    // returns count sum
+    public static function CountColumns()
+    {
+        $db = DBConnection::getConnection();
+        $request = $db->query('SELECT * from sights');
+
+        $request->execute();
+        return $request->columnCount();
+    }
+
+
+    // get the opening hour of a sight by input day
+    // parameter(s) : day, id_sights
+    // returns opening hours
+    public static function GetOpeningHourByDay($day, $id_sights)
+    {
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "SELECT $day FROM opening_hours WHERE id_sights = :id_sights";
+
+            $request = $db->prepare($sql);
+            $request->execute([
+                ':id_sights' => $id_sights,
+            ]);
+            return $request->fetch();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    // get the closing hour of a sight by input day
+    // parameter(s) : day, id_sights
+    // returns closing hours
+    public static function GetClosingHourByDay($day, $id_sights)
+    {
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "SELECT $day FROM closing_hours WHERE id_sights = :id_sights";
+
+            $request = $db->prepare($sql);
+            $request->execute([
+                ':id_sights' => $id_sights,
+            ]);
+            return $request->fetch();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    // checks if a sight is open 24/7
+    // parameter(s) : id_sights
+    // returns true or false
+    public static function IsOpen24h($id_sights)
+    {
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "SELECT o.monday, o.tuesday, o.wednesday, o.thursday, o.friday, o.saturday, c.sunday, c.monday, c.tuesday, c.wednesday, c.thursday, c.friday, c.saturday, c.sunday 
+            FROM opening_hours as o
+            INNER JOIN closing_hours as c
+            ON o.id_sights = :id_sights AND c.id_sights = o.id_sights";
+
+            $request = $db->prepare($sql);
+            $request->execute([
+                ':id_sights' => $id_sights,
+            ]);
+
+            $output = $request->fetch();
+
+            // array_unique combines all array indentic array values in one index
+            // this verifies if all values are = '00:00'
+            if (count(array_unique($output)) === 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /* -- CREATE SIGHT -- */
+
+    // create a sight
+    // parameter(s) : name, price, description, adress, canton, telephone, image, user
+    // returns nothing
+    public static function CreateSight($name, $price, $descripition, $adress, $canton, $telephone, $image, $user_id)
+    {
         try {
             if (UserDAO::IsAdmin($_SESSION['connected_user_id'])) {
                 $sql = "INSERT INTO sights (`name`,`price`,`description`, `adress`, `canton`, `telephone`, `image`, `validated`, `sights_delete_requested`, `id_user`)
-    VALUES (:name, :price, :description, :adress, :canton, :telephone, :image, 1, 0, :user)";
+    VALUES (:name, :price, :description, :adress, :canton, :telephone, :image, 1, 0, :user_id)";
             } else {
                 $sql = "INSERT INTO sights (`name`,`price`,`description`, `adress`, `canton`, `telephone`, `image`, `validated`, `sights_delete_requested`, `id_user`)
-        VALUES (:name, :price, :description, :adress, :canton, :telephone, :image, 0, 0, :user)";
+        VALUES (:name, :price, :description, :adress, :canton, :telephone, :image, 0, 0, :user_id)";
             }
 
             $db = DBConnection::getConnection();
@@ -158,7 +221,7 @@ class SightsDAO
                 ':canton' => $canton,
                 ':telephone' => $telephone,
                 ':image' => $image,
-                ':user' => $user,
+                ':user_id' => $user_id,
             ]);
 
             return $db->lastInsertId();
@@ -167,6 +230,9 @@ class SightsDAO
         }
     }
 
+    // creates opening hours for a sight and links them
+    // parameter(s) : monday, tuesday, wednesday, thursday, friday, saturday, sunday, id_sights
+    // returns nothing
     public static function CreateOpeningHours($monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $sunday, $id_sights)
     {
         try {
@@ -191,6 +257,9 @@ class SightsDAO
         }
     }
 
+    // creates closing hours for a sight and links them
+    // parameter(s) : monday, tuesday, wednesday, thursday, friday, saturday, sunday, id_sights
+    // returns nothing
     public static function CreateClosingHours($monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $sunday, $id_sights)
     {
         try {
@@ -215,6 +284,11 @@ class SightsDAO
         }
     }
 
+    /* -- DELETE SIGHT -- */
+
+    // delete a sight
+    // parameter(s) : id_sights
+    // returns nothing
     public static function DeleteSight($id_sights)
     {
         try {
@@ -233,10 +307,15 @@ class SightsDAO
         }
     }
 
-    public static function UpdateSightInfo($name, $canton, $adress, $telephone, $description, $price, $validated, $sights_delete_requested, $showed, $img, $id)
+    /* -- UPDATE SIGHT --*/
+
+    // update a sight's informations
+    // parameter(s) : name, canton , adress, telephone, description, price, validated, sights_delete_requested, img, id
+    // returns nothing
+    public static function UpdateSightInfo($name, $canton, $adress, $telephone, $description, $price, $validated, $sights_delete_requested, $img, $id)
     {
         try {
-            $sql = "UPDATE sights SET name=:name, canton=:canton, adress=:adress, telephone=:telephone, description=:description, price=:price, validated=:validated, sights_delete_requested=:sights_delete_requested, sight_showed=:showed, image=:img WHERE id=:id";
+            $sql = "UPDATE sights SET name=:name, canton=:canton, adress=:adress, telephone=:telephone, description=:description, price=:price, validated=:validated, sights_delete_requested=:sights_delete_requested, image=:img WHERE id=:id";
 
             $db = DBConnection::getConnection();
             $request = $db->prepare($sql);
@@ -250,7 +329,6 @@ class SightsDAO
                 ':price' => $price,
                 ':validated' => $validated,
                 ':sights_delete_requested' => $sights_delete_requested,
-                ':showed' => $showed,
                 ':img' => $img,
                 ':id' => $id,
             ]);
@@ -259,25 +337,12 @@ class SightsDAO
         }
     }
 
-    public static function UpdateSightShow($id_sights)
-    {
-        try {
-            // sight needs to be validated before showing
-            $sql = "UPDATE sights SET sight_showed=1 WHERE id=:id_sights AND validated = 1";
 
-            $db = DBConnection::getConnection();
-            $request = $db->prepare($sql);
+    /* ----- FILTERS ----- */
 
-            $request->execute([
-                ':id_sights' => $id_sights,
-            ]);
-        } catch (mysqli_sql_exception $exception) {
-            throw $exception;
-        }
-    }
-
-
-    // filter functions
+    // filter's a validated sight by canton, category, age or budget and gets the sights. the parameter arrays will be sent using ajax.
+    // parameter(s) : cantons_array, categories_array, ages_array, budget_array
+    // returns array of data
     public static function Filter($cantons_array, $categories_array, $ages_array, $budget_array)
     {
         try {
@@ -358,7 +423,7 @@ class SightsDAO
                 }
             }
 
-            $sql .= 'GROUP BY a.id';
+            $sql .= 'AND validated = 1 GROUP BY a.id';
 
             $request = $db->prepare($sql);
             $request->execute();
@@ -369,115 +434,11 @@ class SightsDAO
         }
     }
 
-    public static function FilterByCanton($canton)
-    {
-        $db = DBConnection::getConnection();
-        $sql = "SELECT id FROM sights WHERE canton = :canton";
+    /* -- BUDGET -- */
 
-        $request = $db->prepare($sql);
-        $request->execute([':canton' => $canton]);
-        return $request->fetchAll();
-    }
-
-    public static function FilterByCategory($id_category)
-    {
-        $db = DBConnection::getConnection();
-        $sql = "SELECT a.id_sights FROM sights_contains_category as a INNER JOIN sights as b ON a.id_category = :id_category";
-
-        $request = $db->prepare($sql);
-        $request->execute([':id_category' => $id_category]);
-        return $request->fetchAll();
-    }
-
-    public static function GetCategoryIdByName($category_name)
-    {
-        try {
-            $db = DBConnection::getConnection();
-            $sql = "SELECT id FROM category WHERE name=:category_name";
-
-            $request = $db->prepare($sql);
-            $request->execute([':category_name' => $category_name]);
-            return $request->fetch();
-        } catch (mysqli_sql_exception $exception) {
-            return 0;
-        }
-    }
-
-    public static function SightHasCategory($id_category, $id_sights){
-        try {
-            $db = DBConnection::getConnection();
-            $sql = "SELECT * FROM sights_contains_category WHERE id_category = :id_category AND id_sights = :id_sights";
-
-            $request = $db->prepare($sql);
-            $request->execute([':id_category' => $id_category, ':id_sights' => $id_sights]);
-            if ($request->fetch() != 0) {
-                return true;
-            }else{
-                return false;
-            }
-        } catch (mysqli_sql_exception $exception) {
-            return false;
-        }
-    }
-
-    public static function SightHasAgeLimit($id_age_limit, $id_sights){
-        try {
-            $db = DBConnection::getConnection();
-            $sql = "SELECT * FROM sights_has_age_limit WHERE id_age_limit = :id_age_limit AND id_sights = :id_sights";
-
-            $request = $db->prepare($sql);
-            $request->execute([':id_age_limit' => $id_age_limit, ':id_sights' => $id_sights]);
-            if ($request->fetch() != 0) {
-                return true;
-            }else{
-                return false;
-            }
-        } catch (mysqli_sql_exception $exception) {
-            return false;
-        }
-    }
-
-    public static function DeleteSightsAgeLimits($id_sights){
-        try {
-            $sql = "DELETE FROM sights_has_age_limit WHERE id_sights=:id_sights";
-
-            $db = DBConnection::getConnection();
-            $request = $db->prepare($sql);
-
-            $request->execute([
-                ':id_sights' => $id_sights,
-            ]);
-        } catch (mysqli_sql_exception $exception) {
-            throw $exception;
-        }
-    }
-
-    public static function DeleteSightsCategories($id_sights){
-        try {
-            $sql = "DELETE FROM sights_contains_category WHERE id_sights=:id_sights";
-
-            $db = DBConnection::getConnection();
-            $request = $db->prepare($sql);
-
-            $request->execute([
-                ':id_sights' => $id_sights,
-            ]);
-        } catch (mysqli_sql_exception $exception) {
-            throw $exception;
-        }
-    }
-
-
-    public static function FilterByAge($id_age)
-    {
-        $db = DBConnection::getConnection();
-        $sql = "SELECT a.id_sights FROM sights_has_age_limit as a INNER JOIN sights as b ON a.id_age_limit = :id_age";
-
-        $request = $db->prepare($sql);
-        $request->execute([':id_age' => $id_age]);
-        return $request->fetchAll();
-    }
-
+    // filter sight by budget
+    // parameter(s) : budget
+    // returns array of data
     public static function FilterByBudget($budget)
     {
         $db = DBConnection::getConnection();
@@ -495,16 +456,68 @@ class SightsDAO
         return $request->fetchAll();
     }
 
-    public static function GetSightAge($id_sights)
-    {
-        $db = DBConnection::getConnection();
-        $sql = "SELECT a.name FROM age_limit as a INNER JOIN sights_has_age_limit as b ON b.id_sights = :id_sights AND a.id = b.id_age_limit";
+    /* -- CATEGORY -- */
 
-        $request = $db->prepare($sql);
-        $request->execute([':id_sights' => $id_sights]);
-        return $request->fetchAll();
+    // get a category's id with it's name
+    // parameter(s) : category_name
+    // returns id
+    public static function GetCategoryIdByName($category_name)
+    {
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "SELECT id FROM category WHERE name=:category_name";
+
+            $request = $db->prepare($sql);
+            $request->execute([':category_name' => $category_name]);
+            return $request->fetch();
+        } catch (mysqli_sql_exception $exception) {
+            return 0;
+        }
     }
 
+    // verifies if the sight has the given category(in parameter)
+    // parameter(s) : id_category, id_sights
+    // returns true or false
+    public static function SightHasCategory($id_category, $id_sights)
+    {
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "SELECT * FROM sights_contains_category WHERE id_category = :id_category AND id_sights = :id_sights";
+
+            $request = $db->prepare($sql);
+            $request->execute([':id_category' => $id_category, ':id_sights' => $id_sights]);
+            if ($request->fetch() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (mysqli_sql_exception $exception) {
+            return false;
+        }
+    }
+
+    // delete all sight's category
+    // parameter(s) : id_sights
+    // returns nothing
+    public static function DeleteSightsCategories($id_sights)
+    {
+        try {
+            $sql = "DELETE FROM sights_contains_category WHERE id_sights=:id_sights";
+
+            $db = DBConnection::getConnection();
+            $request = $db->prepare($sql);
+
+            $request->execute([
+                ':id_sights' => $id_sights,
+            ]);
+        } catch (mysqli_sql_exception $exception) {
+            throw $exception;
+        }
+    }
+
+    // get all sight's categories
+    // parameter(s) : id_sights
+    // returns array of data
     public static function GetSightCategory($id_sights)
     {
         $db = DBConnection::getConnection();
@@ -515,16 +528,8 @@ class SightsDAO
         return $request->fetchAll();
     }
 
-    public static function GetAgeIdByName($age_name)
-    {
-        $db = DBConnection::getConnection();
-        $sql = "SELECT id FROM age_limit WHERE name = :age_name";
-
-        $request = $db->prepare($sql);
-        $request->execute([':age_name' => $age_name]);
-        return $request->fetch();
-    }
-
+    // get all categories
+    // returns array of data
     public static function GetCategories()
     {
         $db = DBConnection::getConnection();
@@ -535,21 +540,8 @@ class SightsDAO
         return $request->fetchAll();
     }
 
-    public static function GetCategory($offset = null, $limit = null, $category = null)
-    {
-        $db = DBConnection::getConnection();
-
-        if ($category == NULL) {
-            $sql = "SELECT * FROM category";
-        } else {
-            $sql = "SELECT * FROM category WHERE name = $category";
-        }
-
-        $request = $db->prepare($sql);
-        $request->execute();
-        return $request->fetchAll();
-    }
-
+    // count all categories
+    // returns count sum
     public static function CountCategoriesAmount()
     {
         $db = DBConnection::getConnection();
@@ -559,6 +551,9 @@ class SightsDAO
         return $request->fetch();
     }
 
+    // link a category to a sight
+    // parameter(s) : category_name, id_sights
+    // returns nothing
     public static function LinkCategoryToSights($category_name, $id_sights)
     {
         try {
@@ -577,6 +572,76 @@ class SightsDAO
         }
     }
 
+    /* -- AGE LIMIT -- */
+
+    // verifies if the sight has the age limit(in parameter)
+    // parameter(s) : id_age_limit, id_sights
+    // returns true or false
+    public static function SightHasAgeLimit($id_age_limit, $id_sights)
+    {
+        try {
+            $db = DBConnection::getConnection();
+            $sql = "SELECT * FROM sights_has_age_limit WHERE id_age_limit = :id_age_limit AND id_sights = :id_sights";
+
+            $request = $db->prepare($sql);
+            $request->execute([':id_age_limit' => $id_age_limit, ':id_sights' => $id_sights]);
+            if ($request->fetch() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (mysqli_sql_exception $exception) {
+            return false;
+        }
+    }
+
+    // delete all sight's age limit
+    // parameter(s) : id_sights
+    // returns nothing
+    public static function DeleteSightsAgeLimits($id_sights)
+    {
+        try {
+            $sql = "DELETE FROM sights_has_age_limit WHERE id_sights=:id_sights";
+
+            $db = DBConnection::getConnection();
+            $request = $db->prepare($sql);
+
+            $request->execute([
+                ':id_sights' => $id_sights,
+            ]);
+        } catch (mysqli_sql_exception $exception) {
+            throw $exception;
+        }
+    }
+
+    // get all sight's age limits
+    // parameter(s) : id_sights
+    // returns array of data
+    public static function GetSightAge($id_sights)
+    {
+        $db = DBConnection::getConnection();
+        $sql = "SELECT a.name FROM age_limit as a INNER JOIN sights_has_age_limit as b ON b.id_sights = :id_sights AND a.id = b.id_age_limit";
+
+        $request = $db->prepare($sql);
+        $request->execute([':id_sights' => $id_sights]);
+        return $request->fetchAll();
+    }
+
+    // get age's id with it's name
+    // parameter(s) : age_name
+    // returns id
+    public static function GetAgeIdByName($age_name)
+    {
+        $db = DBConnection::getConnection();
+        $sql = "SELECT id FROM age_limit WHERE name = :age_name";
+
+        $request = $db->prepare($sql);
+        $request->execute([':age_name' => $age_name]);
+        return $request->fetch();
+    }
+
+    // get all age limits
+    // returns array of data
     public static function GetAgeLimits()
     {
         $db = DBConnection::getConnection();
@@ -587,6 +652,8 @@ class SightsDAO
         return $request->fetchAll();
     }
 
+    // count all age limits
+    // returns count sum
     public static function CountAgeLimitsAmount()
     {
         $db = DBConnection::getConnection();
@@ -596,6 +663,9 @@ class SightsDAO
         return $request->fetch();
     }
 
+    // link age limit to a sight
+    // parameter(s) : id_age_limit, id_sights
+    // returns nothing
     public static function LinkAgeLimitToSights($id_age_limit, $id_sights)
     {
         try {
@@ -615,72 +685,16 @@ class SightsDAO
         }
     }
 
-    public static function GetOpeningHourByDay($day, $id_sights)
-    {
-        try {
-            $db = DBConnection::getConnection();
-            $sql = "SELECT $day FROM opening_hours WHERE id_sights = :id_sights";
+    /* -- Search Bar -- */
 
-            $request = $db->prepare($sql);
-            $request->execute([
-                ':id_sights' => $id_sights,
-            ]);
-            return $request->fetch();
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-    }
-
-    public static function GetClosingHourByDay($day, $id_sights)
-    {
-        try {
-            $db = DBConnection::getConnection();
-            $sql = "SELECT $day FROM closing_hours WHERE id_sights = :id_sights";
-
-            $request = $db->prepare($sql);
-            $request->execute([
-                ':id_sights' => $id_sights,
-            ]);
-            return $request->fetch();
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-    }
-
-    public static function IsOpen24h($id_sights)
-    {
-        try {
-            $db = DBConnection::getConnection();
-            $sql = "SELECT o.monday, o.tuesday, o.wednesday, o.thursday, o.friday, o.saturday, c.sunday, c.monday, c.tuesday, c.wednesday, c.thursday, c.friday, c.saturday, c.sunday 
-            FROM opening_hours as o
-            INNER JOIN closing_hours as c
-            ON o.id_sights = :id_sights AND c.id_sights = o.id_sights";
-
-            $request = $db->prepare($sql);
-            $request->execute([
-                ':id_sights' => $id_sights,
-            ]);
-
-            $output = $request->fetch();
-
-            // array_unique combines all array indentic array values in one index
-            // this verifies if all values are = '00:00'
-            if (count(array_unique($output)) === 1) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-    }
-
-    // Search Bar
+    // checks if the input from the search bar corresponds to a sight name
+    // parameter(s) : input
+    // returns array of data
     public static function Search($input)
     {
         try {
             $db = DBConnection::getConnection();
-            $sql = "SELECT * FROM sights WHERE name LIKE '%$input%'";
+            $sql = "SELECT * FROM sights WHERE validated = 1 AND name LIKE '%$input%'";
 
             $request = $db->prepare($sql);
             $request->execute();

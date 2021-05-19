@@ -128,7 +128,6 @@ class Sights
         $old_image = $sights_dao->GetSightImage($id_sights)[0];
         $new_image = "";
 
-
         $name = filter_input(INPUT_POST, 'name_' . $id_sights, FILTER_SANITIZE_STRING);
         $canton = filter_input(INPUT_POST, 'canton_' . $id_sights, FILTER_SANITIZE_STRING);
         $adress = filter_input(INPUT_POST, 'adress_' . $id_sights, FILTER_SANITIZE_STRING);
@@ -148,12 +147,6 @@ class Sights
             $is_requested = 0;
         }
 
-        if (isset($_POST['is_showed_' . $id_sights])) {
-            $is_showed = 1;
-        } else {
-            $is_showed = 0;
-        }
-
         if ($_FILES['image_' . $id_sights]['name'] != '') { // if image file is set
             unlink("assets/img/sights/$old_image"); // delete old sight image from folder 
 
@@ -163,7 +156,7 @@ class Sights
             $img_name = explode('.', $tmp_name);
             $image_type = $img_name[1];
 
-            $img_name = $img_name[0] . uniqid() . "." . $image_type; // creates a random name for the image using uniqid()
+            $img_name = $img_name[0] . uniqid() . "." . $image_type; // creates a random name for the image using uniqid()SS
             move_uploaded_file($image_file['tmp_name'], 'assets/img/sights/' . $img_name); // move image file to a folder
 
             $new_image = $img_name;
@@ -171,11 +164,11 @@ class Sights
             $new_image = $old_image;
         }
 
-        $sights_dao->UpdateSightInfo($name, $canton, $adress, $telephone, $description, $price, $is_validated, $is_requested, $is_showed, $new_image, $id_sights);
+        $sights_dao->UpdateSightInfo($name, $canton, $adress, $telephone, $description, $price, $is_validated, $is_requested, $new_image, $id_sights);
+
         header('location: ./index.php?page=admin_sights&message=info-changed');
     }
 
-    // edit categories and age limits
     public static function EditTags($id_sights)
     {
         $sights_dao = new SightsDAO();

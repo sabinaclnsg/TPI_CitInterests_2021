@@ -1,14 +1,12 @@
 <?php
 
 use CitInterests\controllers\Sights;
-use CitInterests\models\SightsDAO;
 
 require_once 'controllers/sights.php';
 
 if (isset($_POST['submit_modify_sight'])) { // if modifications are submitted
     $sight = new Sights();
-
-    $sight->EditSight();
+    var_dump($sight->EditSight());
 } else if (isset($_POST['submit_delete_sight'])) { // if deletion is submitted
     $sight = new Sights();
     $delete_sight_id = filter_input(INPUT_POST, 'delete_sight_id', FILTER_SANITIZE_STRING);
@@ -137,12 +135,6 @@ $offset = ($page - 1) * $_SESSION['show']; // calculates the offset => numbers o
                                                                 } else {
                                                                     echo "<div class='text-center' style='color:red'>NON</div>";
                                                                 }
-                                                            } else if ($column == 'sight_showed') {
-                                                                if ($sight[$column] == '1') {
-                                                                    echo "<div class='text-center' style='color:green'>OUI</div>";
-                                                                } else {
-                                                                    echo "<div class='text-center' style='color:red'>NON</div>";
-                                                                }
                                                             } else {
                                                                 echo $sight[$column];
                                                             }
@@ -151,8 +143,7 @@ $offset = ($page - 1) * $_SESSION['show']; // calculates the offset => numbers o
                                                     <?php
                                                     }
                                                     ?>
-
-
+                                                    
                                                     <td id="unclickable" class="">
                                                         <input type="text" name="id_sight" value="<?= $sight['id'] ?>" hidden>
                                                     </td>
@@ -169,67 +160,7 @@ $offset = ($page - 1) * $_SESSION['show']; // calculates the offset => numbers o
                                                         <a id="<?= $sight['id'] ?>" style="box-shadow: none;" data-toggle="modal" data-target="#confirm_delete_sight" class="open-modal mr-3"><i class="fas fa-minus" style="color: red;"></i></a>
                                                     </td>
                                                 </tr>
-                                                <!-- Modal Edit Tags -->
-                                                <div class="modal fade" id="edit_tags_<?= $sight['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="Modal1CenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <form method="POST">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="Modal1CenterTitle">Modifier les catégories/Âges</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <input type="hidden" value="<?= $sight['id'] ?>" id="modal_edit_tags_<?= $sight['id'] ?>" name="edit_tags_sight_id">
-                                                                    <div class="container">
-                                                                    <!-- Category Tags -->
-                                                                    <h5 class="row">Catégories :&nbsp;</h5>
-                                                                    <div class="row mb-5">
-                                                                        <div class="btn-group-toggle col-12" data-toggle="buttons">
-                                                                            <?php
-                                                                            foreach ($sights_dao->GetCategories() as $category) {
-                                                                                if ($sights_dao->SightHasCategory($category['id'], $sight['id'])) { // checks if sights has this category
-                                                                                    $checked = true;
-                                                                                } else {
-                                                                                    $checked = false;
-                                                                                }
-                                                                            ?>
-                                                                                <label class="btn btn-secondary active btn-tag px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
-                                                                                    <input type="checkbox" autocomplete="off" name="category[]" value="<?= $category['name'] ?>" <?= $checked == true ? 'checked' : '' ?>> <?= $category['name'] ?>
-                                                                                </label>
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Age Limit Tags -->
-                                                                    <h5 class="row">Tranches d'âge :&nbsp;</h5>
-                                                                    <div class="row">
-                                                                        <div class="btn-group-toggle col-12" data-toggle="buttons">
-                                                                            <?php
-                                                                            foreach ($sights_dao->GetAgeLimits() as $age_limit) {
-                                                                                if ($sights_dao->SightHasAgeLimit($age_limit['id'], $sight['id'])) { // checks if sights has this age limit
-                                                                                    $checked = true;
-                                                                                } else {
-                                                                                    $checked = false;
-                                                                                }
-                                                                            ?>
-                                                                                <label class="btn btn-secondary active btn-tag px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
-                                                                                    <input type="checkbox" autocomplete="off" name="age_limit[]" value="<?= $age_limit['name'] ?>" <?= $checked == true ? 'checked' : '' ?>> <?= $age_limit['name'] ?>
-                                                                                </label>
-                                                                            <?php } ?>
 
-                                                                        </div>
-                                                                    </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                                                    <button type="submit" class="btn btn-danger" name="submit_edit_tags">Modifier</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
                                                 <tr class="table-warning">
                                                     <td style="width: 5%">
                                                         <!-- ID -->
@@ -291,7 +222,7 @@ $offset = ($page - 1) * $_SESSION['show']; // calculates the offset => numbers o
                                                                 <label for="file-input<?= $sight['id'] ?>">
                                                                     <i class="fas fa-images" style="cursor:pointer;color:blue"></i>
                                                                 </label>
-                                                                <input id="file-input<?= $sight['id'] ?>" type="file" name="image_<?= $sight['id'] ?>" accept="image/*" hidden />
+                                                                <input id="file-input<?= $sight['id'] ?>" type="file" name="image_<?= $sight['id'] ?>" accept="image/jpeg, image/png" hidden />
                                                             </div>
                                                         </div>
                                                     </td>
@@ -338,7 +269,7 @@ $offset = ($page - 1) * $_SESSION['show']; // calculates the offset => numbers o
                                             <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
                                             <?php
                                             for ($i = 1; $i <= $pages; $i++) { ?>
-                                                <li class="page-item <?= (isset($_GET['page_no']) ? ($_GET['page_no'] == $i ? 'active' : '') : ($i==1?'active':'')) ?>"><a class="page-link" href="index.php?page=admin_sights&page_no=<?= $i ?>"><?= $i ?></a></li>
+                                                <li class="page-item <?= (isset($_GET['page_no']) ? ($_GET['page_no'] == $i ? 'active' : '') : ($i == 1 ? 'active' : '')) ?>"><a class="page-link" href="index.php?page=admin_sights&page_no=<?= $i ?>"><?= $i ?></a></li>
                                             <?php
                                             }
                                             ?>
@@ -375,6 +306,70 @@ $offset = ($page - 1) * $_SESSION['show']; // calculates the offset => numbers o
                     </form>
                 </div>
             </div>
+
+            <!-- Modal Edit Tags -->
+            <?php foreach ($sights_dao->GetSights($limit, $offset) as $sight) { ?>
+            <div class="modal fade" id="edit_tags_<?= $sight['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="Modal1CenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <form method="POST" enctype='multipart/form-data'>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="Modal1CenterTitle">Modifier les catégories/Âges</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" value="<?= $sight['id'] ?>" id="modal_edit_tags_<?= $sight['id'] ?>" name="edit_tags_sight_id">
+                                <div class="container">
+                                    <!-- Category Tags -->
+                                    <h5 class="row">Catégories :&nbsp;</h5>
+                                    <div class="row mb-5">
+                                        <div class="btn-group-toggle col-12" data-toggle="buttons">
+                                            <?php
+                                            foreach ($sights_dao->GetCategories() as $category) {
+                                                if ($sights_dao->SightHasCategory($category['id'], $sight['id'])) { // checks if sights has this category
+                                                    $checked = true;
+                                                } else {
+                                                    $checked = false;
+                                                }
+                                            ?>
+                                                <label class="btn btn-secondary active btn-tag px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
+                                                    <input type="checkbox" autocomplete="off" name="category[]" value="<?= $category['name'] ?>" <?= $checked == true ? 'checked' : '' ?>> <?= $category['name'] ?>
+                                                </label>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <!-- Age Limit Tags -->
+                                    <h5 class="row">Tranches d'âge :&nbsp;</h5>
+                                    <div class="row">
+                                        <div class="btn-group-toggle col-12" data-toggle="buttons">
+                                            <?php
+                                            foreach ($sights_dao->GetAgeLimits() as $age_limit) {
+                                                if ($sights_dao->SightHasAgeLimit($age_limit['id'], $sight['id'])) { // checks if sights has this age limit
+                                                    $checked = true;
+                                                } else {
+                                                    $checked = false;
+                                                }
+                                            ?>
+                                                <label class="btn btn-secondary active btn-tag px-1 my-1" style="height:29px; font-size:15px; padding:2px;">
+                                                    <input type="checkbox" autocomplete="off" name="age_limit[]" value="<?= $age_limit['name'] ?>" <?= $checked == true ? 'checked' : '' ?>> <?= $age_limit['name'] ?>
+                                                </label>
+                                            <?php } ?>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger" name="submit_edit_tags">Modifier</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <?php } ?>
             <?php include_once 'controllers/footer.php' ?>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>

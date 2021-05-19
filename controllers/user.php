@@ -13,10 +13,6 @@ if (!$user_dao->IsAdmin($_SESSION['connected_user_id'])) {
     header('location: index.php?page=login&message=error-not-connected');
 }
 
-foreach ($user_dao->GetUserSights(3) as $key) {
-    var_dump($key['image']);
-}
-
 $count_users = $user_dao->CountUsers()[0];
 $count_columns = $user_dao->CountColumns();
 $column_names = $user_dao->GetColumnNames();
@@ -49,7 +45,11 @@ class User
             if (isset($_POST['is_banned_' . $id_user])) {
                 $is_banned = 1;
                 if (!($user_dao->IsBanned($id_user))) { // sends an email if user wasn't already banned
-                    Mailer::SendMail('Bannissement sur CitInterests', '<p>Bonjour ' . $firstname . ' ' . $lastname . ',</p><br><p>Votre compte à été malheureusement banni. Raison du ban : spam.</p><br><br><p>CitInterests</p>', $email, $firstname, $lastname);
+                    Mailer::SendMail('Bannissement sur CitInterests', 
+                    '<p>Bonjour ' . $firstname . ' ' . $lastname . 
+                    ',</p><br><p>Votre compte à été malheureusement banni. Raison du ban : spam.</p><br><br><p>CitInterests</p>',
+                     $email, $firstname, $lastname);
+                     
                     $alert_message = 'user-banned';
                 }
             } else {

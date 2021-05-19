@@ -1,6 +1,6 @@
 <?php
 if (isset($_GET['page'])) {
-    if ($_GET['page'] != 'homepage' && !str_contains($_GET['page'], 'admin')) {
+    if ($_GET['page'] != 'homepage' && !str_contains($_GET['page'], 'admin') && $_GET['page'] != 'create_sights') {
         $sticky = 'fixed-bottom';
     } else {
         $sticky = '';
